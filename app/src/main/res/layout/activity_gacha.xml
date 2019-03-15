@@ -21,4 +21,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
+    <Button
+            android:id="@+id/charts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/charts"/>
+
+    <com.github.mikephil.charting.charts.PieChart
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:id="@+id/pic_chart"
+            android:layout_gravity="center_horizontal">
+    </com.github.mikephil.charting.charts.PieChart>
+
 </LinearLayout>

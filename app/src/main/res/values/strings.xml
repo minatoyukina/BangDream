@@ -134,6 +134,7 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="about_us">关于我们</string>
     <string name="text">加载中...</string>
+    <string name="charts">抽选结果</string>
 
     <string-array name="library">
         <item>Jsoup</item>
