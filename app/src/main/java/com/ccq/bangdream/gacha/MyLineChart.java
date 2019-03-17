@@ -100,9 +100,9 @@ class MyLineChart {
                 return 0;
             }
         });
-        //图例：得到Lengend
+        //图例：得到Legend
         Legend legend = lineChart.getLegend();
-        //隐藏Lengend
+        //隐藏Legend
         legend.setEnabled(false);
         //隐藏描述
         Description description = new Description();

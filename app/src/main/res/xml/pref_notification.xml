@@ -1,0 +1,26 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceScreen
+            android:title="@string/about_us"/>
+
+    <CheckBoxPreference
+            android:title="@string/update"
+            android:summary="1.0.0"/>
+
+    <Preference
+            android:title="@string/img_path"
+            android:summary="sdcard"/>
+
+    <ListPreference
+            android:title="@string/licence"
+            android:dialogTitle="开源库"
+            android:entries="@array/library"
+            android:entryValues="@array/library_index"
+    />
+
+    <EditTextPreference
+            android:title="@string/donate"
+            android:defaultValue="@string/img_path"
+            android:onClick="@string/img_path"/>
+
+</PreferenceScreen>

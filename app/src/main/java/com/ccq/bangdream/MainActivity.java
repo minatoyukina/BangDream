@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        setTitle("当前活动");
         setContentView(R.layout.activity_main);
 
         @SuppressLint("HandlerLeak") final Handler handler = new Handler() {
