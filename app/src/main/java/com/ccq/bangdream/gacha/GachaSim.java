@@ -148,13 +148,13 @@ public class GachaSim extends AppCompatActivity {
                 pieData.setValueTextSize(12f);
                 Description description = new Description();
                 description.setText("抽选结果");
-                PieChart picChart = findViewById(R.id.pic_chart);
-                picChart.setDescription(description);
-                picChart.setHoleRadius(0f);
-                picChart.setTransparentCircleRadius(0f);
-//                picChart.setUsePercentValues(true);
-                picChart.setData(pieData);
-//                picChart.invalidate();
+                PieChart pieChart = findViewById(R.id.pic_chart);
+                pieChart.setDescription(description);
+                pieChart.setHoleRadius(0f);
+                pieChart.setTransparentCircleRadius(0f);
+//                pieChart.setUsePercentValues(true);
+                pieChart.setData(pieData);
+//                pieChart.invalidate();
             }
         });
     }

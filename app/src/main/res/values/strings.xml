@@ -135,6 +135,7 @@
     <string name="about_us">关于我们</string>
     <string name="text">加载中...</string>
     <string name="charts">抽选结果</string>
+    <string name="go_on">继续</string>
 
     <string-array name="library">
         <item>Jsoup</item>

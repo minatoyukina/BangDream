@@ -42,18 +42,20 @@ public class ChartResult extends AppCompatActivity {
         pieData.setValueTextSize(12f);
         Description description = new Description();
         description.setText("抽选结果");
-        PieChart picChart = findViewById(R.id.pic_chart);
-        picChart.setDescription(description);
-        picChart.setHoleRadius(0f);
-        picChart.setTransparentCircleRadius(0f);
-        picChart.setUsePercentValues(true);
-        picChart.setData(pieData);
-        picChart.invalidate();
+        PieChart pieChart = findViewById(R.id.pie_chart);
+        pieChart.setDescription(description);
+        pieChart.setHoleRadius(0f);
+        pieChart.setTransparentCircleRadius(0f);
+        pieChart.setUsePercentValues(true);
+        pieChart.setData(pieData);
+        pieChart.invalidate();
 
         LineChart lineChart = findViewById(R.id.line_Chart);
         MyLineChart myLineChart = new MyLineChart();
-        ArrayList<Integer> line = intent.getIntegerArrayListExtra("line");
-        myLineChart.initLineChart(lineChart, line);
+        ArrayList<Integer> line2 = intent.getIntegerArrayListExtra("line2");
+        ArrayList<Integer> line3 = intent.getIntegerArrayListExtra("line3");
+        ArrayList<Integer> line4 = intent.getIntegerArrayListExtra("line4");
+        myLineChart.initLineChart(lineChart, line2, line3, line4);
 
     }
 }

@@ -16,22 +16,33 @@
             android:layout_height="wrap_content"
             android:text="@string/_10hits"/>
 
-    <ListView
+    <GridView
             android:id="@+id/card_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-    <Button
-            android:id="@+id/charts"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/charts"/>
+            android:columnWidth="75dp"
+            android:stretchMode="spacingWidthUniform"
+            android:numColumns="5"/>
 
-    <com.github.mikephil.charting.charts.PieChart
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:id="@+id/pic_chart"
-            android:layout_gravity="center_horizontal">
-    </com.github.mikephil.charting.charts.PieChart>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        <Button
+                android:id="@+id/charts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/charts"
+                android:visibility="invisible"/>
+        <Button
+                android:id="@+id/go_on"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/go_on"
+                android:visibility="invisible"/>
+
+    </LinearLayout>
 
 </LinearLayout>
