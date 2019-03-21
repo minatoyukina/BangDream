@@ -1,9 +1,11 @@
 package com.ccq.bangdream.map;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.*;
@@ -48,18 +50,41 @@ public class MapGame extends AppCompatActivity {
                 song.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        if (i == 0) {
+                            return;
+                        }
                         if (titles.get(i).equals(value)) {
-                            Toast.makeText(MapGame.this, "选择正确", Toast.LENGTH_LONG).show();
-                            button.performClick();
+                            AlertDialog.Builder dialog = new AlertDialog.Builder(MapGame.this);
+                            dialog.setTitle("结果");
+                            dialog.setMessage("\n回答正确");
+                            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    button.performClick();
+                                }
+                            });
+                            dialog.show();
+                        } else {
+                            AlertDialog.Builder dialog = new AlertDialog.Builder(MapGame.this);
+                            dialog.setTitle("结果");
+                            dialog.setMessage("\n正确答案为: " + value);
+                            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    button.performClick();
+                                }
+                            });
+                            dialog.show();
                         }
                     }
+
 
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
 
                     }
                 });
-                Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/bg/" + str + "bg.png").apply(bitmapTransform(new CropTransformation(3018 / 21, 984, CropTransformation.CropType.CENTER))).into(mapBar);
+//                Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/bg/" + str + "bg.png").apply(bitmapTransform(new CropTransformation(3018 / 21, 984, CropTransformation.CropType.CENTER))).into(mapBar);
                 Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new CropTransformation(144, 984, CropTransformation.CropType.CENTER))).into(mapBar);
             }
         };
@@ -89,6 +114,7 @@ public class MapGame extends AppCompatActivity {
                     @SuppressLint("DefaultLocale") String str = String.format("%03d", i);
                     String[] songs = td.split("--> <script>");
                     if (titles.size() == 0) {
+                        titles.add("--------请选择--------");
                         for (String song : songs) {
                             String title = song.split("<!--")[1];
                             titles.add(title);
