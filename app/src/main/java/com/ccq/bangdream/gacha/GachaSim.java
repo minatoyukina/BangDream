@@ -1,29 +1,25 @@
 package com.ccq.bangdream.gacha;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import com.bumptech.glide.Glide;
 import com.ccq.bangdream.R;
 import com.ccq.bangdream.greendao.CardDao;
 import com.ccq.bangdream.greendao.DaoMaster;
 import com.ccq.bangdream.greendao.DaoSession;
 import com.ccq.bangdream.pojo.Card;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
+import com.ccq.bangdream.util.ListSumUtil;
 import org.greenrobot.greendao.query.QueryBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -41,12 +37,25 @@ public class GachaSim extends AppCompatActivity {
     private static float THREE_STAR;
     private static float FOUR_STAR;
 
+    private ArrayList<Integer> list2 = new ArrayList<>();
+    private ArrayList<Integer> list3 = new ArrayList<>();
+    private ArrayList<Integer> list4 = new ArrayList<>();
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.gacha);
         setContentView(R.layout.activity_gacha);
-        Button button = findViewById(R.id.gacha);
+        SQLiteService service = new SQLiteService(GachaSim.this, DB_PATH, null, 1);
+
+        SQLiteDatabase readableDatabase = service.getReadableDatabase();
+        final DaoSession daoSession = new DaoMaster(readableDatabase).newSession();
+        final CardDao cardDao = daoSession.getCardDao();
+        QueryBuilder.LOG_SQL = true;
+        QueryBuilder.LOG_VALUES = true;
+
+        final Button button = findViewById(R.id.gacha);
         @SuppressLint("HandlerLeak") final Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -79,13 +88,6 @@ public class GachaSim extends AppCompatActivity {
         };
         new Thread(networkTask).start();
 
-        SQLiteService service = new SQLiteService(GachaSim.this, DB_PATH, null, 1);
-
-        SQLiteDatabase readableDatabase = service.getReadableDatabase();
-        final DaoSession daoSession = new DaoMaster(readableDatabase).newSession();
-        final CardDao cardDao = daoSession.getCardDao();
-        QueryBuilder.LOG_SQL = true;
-        QueryBuilder.LOG_VALUES = true;
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,47 +119,62 @@ public class GachaSim extends AppCompatActivity {
                 int index = (int) (Math.random() * list.size());
                 Card card = list.get(index);
                 picList.add("http://" + card.getIcon());
+                THREE_STAR++;
 
                 for (String s : picList) {
                     Log.d("list", s);
                 }
 
-                ListView listView = findViewById(R.id.card_list);
+                GridView listView = findViewById(R.id.card_list);
                 listView.setAdapter(new GachaListAdapter(GachaSim.this, picList));
+                if (list2.size() == 0) {
+                    list2.add((int) TWO_STAR);
+                } else {
+                    list2.add((int) TWO_STAR - ListSumUtil.sum(list2));
+                }
+                if (list3.size() == 0) {
+                    list3.add((int) THREE_STAR);
+                } else {
+                    list3.add((int) THREE_STAR - ListSumUtil.sum(list3));
+                }
+                if (list4.size() == 0) {
+                    list4.add((int) FOUR_STAR);
+                } else {
+                    list4.add((int) FOUR_STAR - ListSumUtil.sum(list4));
+                }
+
+                Button goOn = findViewById(R.id.go_on);
+                Button chart = findViewById(R.id.charts);
+                goOn.setVisibility(View.VISIBLE);
+                chart.setVisibility(View.VISIBLE);
             }
         });
+
+        Button goOn = findViewById(R.id.go_on);
+        goOn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                button.performClick();
+            }
+        });
+
 
         Button chart = findViewById(R.id.charts);
         chart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<PieEntry> pieEntries = new ArrayList<>();
-                pieEntries.add(new PieEntry(TWO_STAR / (TWO_STAR + THREE_STAR + FOUR_STAR), "二星"));
-                pieEntries.add(new PieEntry(THREE_STAR / (TWO_STAR + THREE_STAR + FOUR_STAR), "三星"));
-                pieEntries.add(new PieEntry(FOUR_STAR / (TWO_STAR + THREE_STAR + FOUR_STAR), "四星"));
+                float[] floats = new float[3];
+                floats[0] = TWO_STAR;
+                floats[1] = THREE_STAR;
+                floats[2] = FOUR_STAR;
+                Intent intent = new Intent(GachaSim.this, ChartResult.class);
+                intent.putExtra("pie", floats);
+                intent.putIntegerArrayListExtra("line2", list2);
+                intent.putIntegerArrayListExtra("line3", list3);
+                intent.putIntegerArrayListExtra("line4", list4);
+                startActivity(intent);
 
-                PieDataSet dataSet = new PieDataSet(pieEntries, "");
-                List<Integer> colors = new ArrayList<>();
-                colors.add(ContextCompat.getColor(GachaSim.this, R.color.colorPrimary));
-                colors.add(ContextCompat.getColor(GachaSim.this, R.color.colorAccent));
-                colors.add(ContextCompat.getColor(GachaSim.this, R.color.colorGreen));
-                dataSet.setColors(colors);
-
-                PieData pieData = new PieData(dataSet);
-//                pieData.setDrawValues(true);
-                pieData.setValueTextSize(12f);
-                Description description = new Description();
-                description.setText("抽选结果");
-                PieChart pieChart = findViewById(R.id.pic_chart);
-                pieChart.setDescription(description);
-                pieChart.setHoleRadius(0f);
-                pieChart.setTransparentCircleRadius(0f);
-//                pieChart.setUsePercentValues(true);
-                pieChart.setData(pieData);
-//                pieChart.invalidate();
             }
         });
     }
-
-
 }

@@ -56,7 +56,7 @@ class MyLineChart {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f);
         xAxis.setLabelCount(list.size(), false);
-        xAxis.setAxisMinimum(1f);
+        xAxis.setAxisMinimum(0f);
         xAxis.setAxisMaximum(list.size());
         xAxis.setLabelRotationAngle(10);
         xAxis.setValueFormatter(new IAxisValueFormatter() {

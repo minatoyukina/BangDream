@@ -40,7 +40,6 @@ public class MapGame extends AppCompatActivity {
                 Bundle data = msg.getData();
                 value = data.getString("value");
                 String str = data.getString("str");
-                titles = data.getCharSequenceArrayList("songs");
                 TextView titleView = findViewById(R.id.map_title);
                 titleView.setText(value);
                 Spinner song = findViewById(R.id.song);
@@ -61,7 +60,7 @@ public class MapGame extends AppCompatActivity {
                     }
                 });
                 Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/bg/" + str + "bg.png").apply(bitmapTransform(new CropTransformation(3018 / 21, 984, CropTransformation.CropType.CENTER))).into(mapBar);
-                Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new CropTransformation(144, 984, CropTransformation.CropType.TOP))).into(mapBar);
+                Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new CropTransformation(144, 984, CropTransformation.CropType.CENTER))).into(mapBar);
             }
         };
         button.setOnClickListener(new View.OnClickListener() {
@@ -89,18 +88,22 @@ public class MapGame extends AppCompatActivity {
                     String td = document.select("table[class=c]").eq(2).select("td").toString().replace("<td> <script>", "").replace("--> </td>", "");
                     @SuppressLint("DefaultLocale") String str = String.format("%03d", i);
                     String[] songs = td.split("--> <script>");
+                    if (titles.size() == 0) {
+                        for (String song : songs) {
+                            String title = song.split("<!--")[1];
+                            titles.add(title);
+                        }
+                    }
                     for (String song : songs) {
                         String sort = song.split(";")[0];
                         String title = song.split("<!--")[1];
-                        titles.add(title);
                         if (sort.equals("SORT" + str + "()")) {
-                            data.putCharSequenceArrayList("songs", titles);
                             data.putString("value", title);
                             data.putString("str", str);
-                            msg.setData(data);
-                            handler.sendMessage(msg);
                         }
                     }
+                    msg.setData(data);
+                    handler.sendMessage(msg);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
