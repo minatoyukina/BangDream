@@ -2,6 +2,7 @@ package com.ccq.bangdream;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +11,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -19,7 +21,6 @@ import android.view.Window;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 import com.ccq.bangdream.card.LoadCards;
 import com.ccq.bangdream.event.LoadEvents;
 import com.ccq.bangdream.gacha.GachaSim;
@@ -35,7 +36,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Intent intent;
     private WebView webView;
-    private ProgressBar progressBar;
 
     @SuppressLint({"SetJavaScriptEnabled", "InflateParams"})
     @Override
@@ -45,19 +45,40 @@ public class MainActivity extends AppCompatActivity
         setTitle("当前活动");
         setContentView(R.layout.activity_main);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.dialog);
+        builder.setCancelable(false);
+        builder.setView(R.layout.layout_dialog);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
         @SuppressLint("HandlerLeak") final Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-//                progressBar = findViewById(R.id.progressBar);
-//                progressBar.setVisibility(View.VISIBLE);
+
                 Bundle data = msg.getData();
-                String value = data.getString("value");
+                final String value = data.getString("value");
                 webView = findViewById(R.id.index);
-                webView.setWebViewClient(new MainActivity.MyWebViewClient());
                 webView.getSettings().setJavaScriptEnabled(true);
-//                progressBar.setVisibility(View.GONE);
                 webView.loadUrl(value);
+                webView.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                        view.loadUrl(request.getUrl().toString());
+                        return true;
+                    }
+
+                    @Override
+                    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                        super.onPageStarted(view, url, favicon);
+                    }
+
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+                        super.onPageFinished(view, url);
+                        dialog.dismiss();
+                    }
+                });
             }
 
         };
@@ -93,14 +114,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    private class MyWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            view.loadUrl(request.getUrl().toString());
-            return true;
-        }
     }
 
     @Override
@@ -166,6 +179,7 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 

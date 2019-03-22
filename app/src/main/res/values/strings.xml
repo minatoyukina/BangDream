@@ -6,7 +6,7 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">minatoyukina@github.com</string>
     <string name="nav_header_desc">导航栏头部</string>
-    <string name="action_settings">倒序查看</string>
+    <string name="action_settings">戳什么戳</string>
     <string name="card">卡片查询</string>
     <string name="event">活动回顾</string>
     <string name="gacha">抽卡模拟</string>
@@ -63,7 +63,7 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="about_us">关于我们</string>
-    <string name="text" tools:ignore="TypographyEllipsis">加载中...</string>
+    <string name="loading" tools:ignore="TypographyEllipsis">加载中...</string>
     <string name="charts">抽选结果</string>
     <string name="go_on">继续</string>
 

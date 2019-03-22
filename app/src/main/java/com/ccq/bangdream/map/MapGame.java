@@ -117,7 +117,7 @@ public class MapGame extends AppCompatActivity {
                     @SuppressLint("DefaultLocale") String str = String.format("%03d", i);
                     String[] songs = td.split("--> <script>");
                     if (titles.size() == 0) {
-                        titles.add("- . - . - . - . - . - . - . - . - . - . ");
+                        titles.add(" ✢✣✤✥❋✦✧※❇❈✢✣✤✥❋✦✧※❇❈ ");
                         for (String song : songs) {
                             String title = song.split("<!--")[1];
                             titles.add(title);
