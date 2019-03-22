@@ -25,6 +25,7 @@ import com.ccq.bangdream.event.LoadEvents;
 import com.ccq.bangdream.gacha.GachaSim;
 import com.ccq.bangdream.map.MapGame;
 import com.ccq.bangdream.score.ScoreSum;
+import com.ccq.bangdream.setting.ActivityWithPreferenceFragment;
 import com.ccq.bangdream.setting.SettingsActivity;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -161,7 +162,7 @@ public class MainActivity extends AppCompatActivity
             intent.setType("text/plain");
             intent.putExtra(Intent.EXTRA_TEXT, "https://github.com/minatoyukina");
         } else if (id == R.id.nav_setting) {
-            intent = new Intent(MainActivity.this, SettingsActivity.class);
+            intent = new Intent(MainActivity.this, ActivityWithPreferenceFragment.class);
         }
         startActivity(intent);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

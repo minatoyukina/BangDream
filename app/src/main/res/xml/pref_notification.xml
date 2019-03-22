@@ -11,12 +11,9 @@
             android:title="@string/img_path"
             android:summary="sdcard"/>
 
-    <ListPreference
+    <Preference
             android:title="@string/licence"
-            android:dialogTitle="开源库"
-            android:entries="@array/library"
-            android:entryValues="@array/library_index"
-    />
+            android:key="library"/>
 
     <EditTextPreference
             android:title="@string/donate"

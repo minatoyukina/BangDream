@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/setting_preference">
+    <Preference
+            android:key="img_path"
+            android:summary="配置图片保存路径"
+            android:title="@string/img_path"/>
+    <Preference
+            android:key="update"
+            android:summary="当前版本"
+            android:title="@string/update"/>
+    <Preference
+            android:key="about_us"
+            android:summary="minatoyukina@github.com"
+            android:title="@string/about_us"/>
+    <Preference
+            android:key="licence"
+            android:summary="本程序的诞生离不开众多开源项目的支持"
+            android:title="@string/licence"/>
+    <Preference
+            android:key="donate"
+            android:summary="donate is never required but always appreciated"
+            android:title="@string/donate"/>
+</PreferenceScreen>

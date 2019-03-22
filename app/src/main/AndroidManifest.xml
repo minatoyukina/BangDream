@@ -32,12 +32,9 @@
         <activity android:name=".score.ScoreSum"/>
         <activity android:name=".map.MapGame">
         </activity>
-        <activity
-                android:name=".setting.SettingsActivity"
-                android:label="@string/title_activity_settings">
-        </activity>
 
         <activity android:name=".gacha.ChartResult"/>
+        <activity android:name=".setting.ActivityWithPreferenceFragment"/>
     </application>
 
 </manifest>
