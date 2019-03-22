@@ -17,6 +17,7 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
@@ -31,6 +32,8 @@ public class MapGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.map);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         setContentView(R.layout.activity_map_game);
         final ImageView mapBar = findViewById(R.id.map_bar);
         final Button button = findViewById(R.id.guess);
@@ -114,7 +117,7 @@ public class MapGame extends AppCompatActivity {
                     @SuppressLint("DefaultLocale") String str = String.format("%03d", i);
                     String[] songs = td.split("--> <script>");
                     if (titles.size() == 0) {
-                        titles.add("--------请选择--------");
+                        titles.add("- . - . - . - . - . - . - . - . - . - . ");
                         for (String song : songs) {
                             String title = song.split("<!--")[1];
                             titles.add(title);
@@ -136,5 +139,11 @@ public class MapGame extends AppCompatActivity {
             }
         };
         new Thread(networkTask).start();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

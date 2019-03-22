@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.*;
 import com.ccq.bangdream.R;
 
+import java.util.Objects;
+
 public class ScoreSum extends AppCompatActivity {
     private ArrayAdapter<String> memberAdapter = null;
     private Integer[][] intMember = new Integer[][]{
@@ -21,6 +23,8 @@ public class ScoreSum extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.score);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         setContentView(R.layout.activity_score);
         Spinner band = findViewById(R.id.band);
 
@@ -44,5 +48,11 @@ public class ScoreSum extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

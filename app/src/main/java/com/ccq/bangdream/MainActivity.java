@@ -26,7 +26,6 @@ import com.ccq.bangdream.gacha.GachaSim;
 import com.ccq.bangdream.map.MapGame;
 import com.ccq.bangdream.score.ScoreSum;
 import com.ccq.bangdream.setting.ActivityWithPreferenceFragment;
-import com.ccq.bangdream.setting.SettingsActivity;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
