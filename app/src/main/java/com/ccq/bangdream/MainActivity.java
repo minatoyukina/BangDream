@@ -14,6 +14,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,10 +29,13 @@ import com.ccq.bangdream.gacha.GachaSim;
 import com.ccq.bangdream.map.MapGame;
 import com.ccq.bangdream.score.ScoreSum;
 import com.ccq.bangdream.setting.ActivityWithPreferenceFragment;
+import com.ccq.bangdream.util.MyApplication;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -76,9 +81,11 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onPageFinished(WebView view, String url) {
                         super.onPageFinished(view, url);
+                        loadCss();
                         dialog.dismiss();
                     }
                 });
+
             }
 
         };
@@ -181,6 +188,31 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
+    }
+
+    private void loadCss() {
+        InputStream is = null;
+        try {
+            is = MyApplication.getContext().getAssets().open("display.css");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            byte[] buffer = new byte[Objects.requireNonNull(is).available()];
+            is.read(buffer);
+            is.close();
+            String cssCode = Base64.encodeToString(buffer, Base64.NO_WRAP);
+            String jsCode = "javascript:(function() {" +
+                    "var parent = document.getElementsByTagName('head').item(0);" +
+                    "var style = document.createElement('style');" +
+                    "style.type = 'text/css';" +
+                    "style.innerHTML = window.atob('" + cssCode + "');" +
+                    "parent.appendChild(style);" +
+                    "})();";
+            webView.loadUrl(jsCode);
+        } catch (IOException e) {
+            Log.d("test", e.getMessage());
+        }
     }
 
 }

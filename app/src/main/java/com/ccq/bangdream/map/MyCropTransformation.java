@@ -5,30 +5,26 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import jp.wasabeef.glide.transformations.CropTransformation;
 
+
 public class MyCropTransformation extends CropTransformation {
 
-
-    public enum CropType {
-        PRE,
-        RANDOM,
-        NEXT
-    }
+    private CropType cropType;
 
     public MyCropTransformation(int width, int height) {
-        super(width, height);
+        this(width, height, CropType.CENTER);
     }
 
-    public MyCropTransformation(int width, int height, CropTransformation.CropType cropType) {
-        super(width, height, cropType);
+    MyCropTransformation(int width, int height, CropType cropType) {
+        super(width, height);
+        this.cropType = cropType;
     }
 
     private int width;
     private int height;
-
-    private MyCropTransformation.CropType cropType = MyCropTransformation.CropType.RANDOM;
 
 
     @Override
@@ -50,9 +46,13 @@ public class MyCropTransformation extends CropTransformation {
 
         float scaledWidth = scale * toTransform.getWidth();
         float scaledHeight = scale * toTransform.getHeight();
-        float left = (width - scaledWidth) / 2;
-        float top = getTop(scaledHeight);
-        RectF targetRect = new RectF(left, top, left + scaledWidth, top + scaledHeight);
+        float left = getLeft(scaledWidth);
+        float top = (width - scaledHeight) / 2;
+        RectF targetRect = new RectF(0, 0, 144, 984);
+        Log.d("left", String.valueOf(left));
+        Log.d("top", String.valueOf(top));
+        Log.d("right", String.valueOf(scaledHeight));
+        Log.d("bottom", String.valueOf(scaledWidth));
 
         Canvas canvas = new Canvas(bitmap);
         canvas.drawBitmap(toTransform, null, targetRect, null);
@@ -66,14 +66,14 @@ public class MyCropTransformation extends CropTransformation {
                 + ")";
     }
 
-    private float getTop(float scaledHeight) {
+    private float getLeft(float scaledWidth) {
         switch (cropType) {
-            case PRE:
+            case TOP:
                 return 0;
-            case RANDOM:
-                return (height - scaledHeight) / 2;
-            case NEXT:
-                return height - scaledHeight;
+            case CENTER:
+                return (width - scaledWidth) / 2;
+            case BOTTOM:
+                return width - scaledWidth;
             default:
                 return 0;
         }
