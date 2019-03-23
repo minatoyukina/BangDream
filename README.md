@@ -1,7 +1,7 @@
 # BangDream
 &nbsp; An unoffical android app for bandori.party with gacha simulation and a mini game.
 
-# Simple Flashlight
+# Flashlight
 
 # Release
 
@@ -12,7 +12,7 @@
 * [ ] band score caculation
 * [ ] login?
 
-# Pull request
+# Contribution
 &nbsp; Pull request is always appreciated since I'm new in Android and this project is just for practice.
 
 # License
