@@ -1,6 +1,7 @@
 package com.ccq.bangdream.event;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -17,6 +18,8 @@ public class LoadEvents extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        Window window = getWindow();
+        window.setStatusBarColor(Color.parseColor("#e40046"));
         setContentView(R.layout.activity_web_event);
         webView = findViewById(R.id.event);
         webView.setWebViewClient(new MyWebViewClient());

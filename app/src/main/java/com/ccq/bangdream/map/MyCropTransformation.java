@@ -46,13 +46,13 @@ public class MyCropTransformation extends CropTransformation {
 
         float scaledWidth = scale * toTransform.getWidth();
         float scaledHeight = scale * toTransform.getHeight();
-        float left = getLeft(scaledWidth);
-        float top = (width - scaledHeight) / 2;
-        RectF targetRect = new RectF(0, 0, 144, 984);
+        float left = 0;
+        float top = getTop(scaledHeight);
+        RectF targetRect = new RectF(left, top, left + scaledWidth, top + scaledHeight);
         Log.d("left", String.valueOf(left));
         Log.d("top", String.valueOf(top));
-        Log.d("right", String.valueOf(scaledHeight));
-        Log.d("bottom", String.valueOf(scaledWidth));
+        Log.d("scaledHeight", String.valueOf(scaledHeight));
+        Log.d("scaledWidth", String.valueOf(scaledWidth));
 
         Canvas canvas = new Canvas(bitmap);
         canvas.drawBitmap(toTransform, null, targetRect, null);
@@ -66,14 +66,14 @@ public class MyCropTransformation extends CropTransformation {
                 + ")";
     }
 
-    private float getLeft(float scaledWidth) {
+    private float getTop(float scaledHeight) {
         switch (cropType) {
             case TOP:
                 return 0;
             case CENTER:
-                return (width - scaledWidth) / 2;
+                return (height - scaledHeight) / 2;
             case BOTTOM:
-                return width - scaledWidth;
+                return height - scaledHeight;
             default:
                 return 0;
         }

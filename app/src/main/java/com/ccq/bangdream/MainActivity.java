@@ -199,7 +199,8 @@ public class MainActivity extends AppCompatActivity
         }
         try {
             byte[] buffer = new byte[Objects.requireNonNull(is).available()];
-            is.read(buffer);
+            int read = is.read(buffer);
+            Log.d("whatever", String.valueOf(read));
             is.close();
             String cssCode = Base64.encodeToString(buffer, Base64.NO_WRAP);
             String jsCode = "javascript:(function() {" +
