@@ -14,6 +14,11 @@
             android:layout_height="wrap_content"
             android:text="@string/next_map"/>
 
+    <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/please_select"/>
+
     <Spinner
             android:id="@+id/song"
             android:layout_width="match_parent"
@@ -25,27 +30,31 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
 
-    <TextView
-            android:layout_height="wrap_content"
+    <LinearLayout
             android:layout_width="match_parent"
-            android:text="@string/please_select"/>
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="2">
 
-    <Button
-            android:id="@+id/pre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/pre_5s"/>
+        <Button
+                android:id="@+id/pre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/pre_5s"/>
 
-    <Button
-            android:id="@+id/next"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/next_5s"/>
+        <Button
+                android:id="@+id/next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/next_5s"/>
+
+    </LinearLayout>
 
     <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/map_bar"/>
-
 
 </LinearLayout>
