@@ -86,7 +86,7 @@ public class MapGame extends AppCompatActivity {
 
                     }
                 });
-                Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, MyCropTransformation.CropType.BOTTOM))).into(mapBar);
+                Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, MyCropTransformation.CropType.BOTTOM, str))).into(mapBar);
             }
         };
         button.setOnClickListener(new View.OnClickListener() {

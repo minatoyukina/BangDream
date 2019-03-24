@@ -9,18 +9,23 @@ import android.util.Log;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import jp.wasabeef.glide.transformations.CropTransformation;
 
+import java.util.Random;
+
 
 public class MyCropTransformation extends CropTransformation {
 
+    private int position;
+    private String songId;
+
     private CropType cropType;
 
-    public MyCropTransformation(int width, int height) {
-        this(width, height, CropType.CENTER);
-    }
 
-    MyCropTransformation(int width, int height, CropType cropType) {
+    MyCropTransformation(int width, int height, CropType cropType, String songId) {
         super(width, height);
+        this.width = width;
+        this.height = height;
         this.cropType = cropType;
+        this.songId = songId;
     }
 
     private int width;
@@ -46,10 +51,16 @@ public class MyCropTransformation extends CropTransformation {
 
         float scaledWidth = scale * toTransform.getWidth();
         float scaledHeight = scale * toTransform.getHeight();
-        float left = 0;
         float top = getTop(scaledHeight);
-        RectF targetRect = new RectF(left, top, left + scaledWidth, top + scaledHeight);
-        Log.d("left", String.valueOf(left));
+//        float left = (width - (float)toTransform.getWidth()) / 2;
+
+        int pieces = Math.round((float) toTransform.getWidth() / width);
+        Random random = new Random();
+        int i = random.nextInt(pieces);
+        float left = (float) (width - width * i) / 2;
+        RectF targetRect = new RectF(left, top, left + (float) toTransform.getWidth(), top + scaledHeight);
+        Log.d("width", String.valueOf(width));
+        Log.d("real-width", String.valueOf(toTransform.getWidth()));
         Log.d("top", String.valueOf(top));
         Log.d("scaledHeight", String.valueOf(scaledHeight));
         Log.d("scaledWidth", String.valueOf(scaledWidth));
