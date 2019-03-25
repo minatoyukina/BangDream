@@ -9,9 +9,9 @@
             android:key="update"
             android:title="@string/update"/>
     <Preference
-            android:key="about_us"
+            android:key="contract_us"
             android:summary="minatoyukina@github.com"
-            android:title="@string/about_us"/>
+            android:title="@string/contract_us"/>
     <Preference
             android:key="licence"
             android:summary="本程序的诞生离不开众多开源项目的支持"

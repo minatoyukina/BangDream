@@ -6,65 +6,25 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">minatoyukina@github.com</string>
     <string name="nav_header_desc">导航栏头部</string>
-    <string name="action_settings">戳什么戳</string>
+    <string name="action_settings">......</string>
     <string name="card">卡片查询</string>
     <string name="event">活动回顾</string>
     <string name="gacha">抽卡模拟</string>
     <string name="score">总力统计</string>
+    <string name="map">看图识谱</string>
     <string name="other">其它</string>
     <string name="share">分享</string>
     <string name="setting">设置</string>
     <string name="img_path">图片路径</string>
+    <string name="contract_us">联系我们</string>
     <string name="licence">开源许可</string>
     <string name="donate">赞助我们</string>
     <string name="update">检查更新</string>
+
     <string name="_10hits">活动十连</string>
-
-    <string-array name="band">
-        <item>Popping Party</item>
-        <item>Afterglow</item>
-        <item>Roselia</item>
-        <item>Pastel Palettes</item>
-        <item>Hello Happy World</item>
-    </string-array>
-
-    <string name="kasumi">户山 香橙</string>
-    <string name="rimi">牛込 りみ</string>
-    <string name="arisa">市ヶ谷 有咲</string>
-    <string name="tae">花園 たえ</string>
-    <string name="saaya">山吹 沙綾</string>
-
-    <string name="ran">美竹 蘭</string>
-    <string name="himari">上原 ひまり</string>
-    <string name="tomoe">宇田川 巴</string>
-    <string name="moka">青葉 もか</string>
-    <string name="tsugumi">羽沢 つぐみ</string>
-
-    <string name="yukina">湊 友希那</string>
-    <string name="rinko">白金 燐子</string>
-    <string name="ako">宇田川 あこ</string>
-    <string name="sayo">氷川 紗夜</string>
-    <string name="risa">今井 リサ</string>
-
-    <string name="aya">丸山 彩</string>
-    <string name="hina">氷川 日菜</string>
-    <string name="chisato">白鷺 千聖</string>
-    <string name="maya">大和 麻弥</string>
-    <string name="ibu">若宮 イヴ</string>
-
-    <string name="kokoro">弦卷 こころ</string>
-    <string name="kanon">松原 花音</string>
-    <string name="kaoru">濑田 薰</string>
-    <string name="misaki">奥沢 美咲</string>
-    <string name="hagumi">北沢 はぐみ</string>
-
-    <string name="map">看图识谱</string>
     <string name="next_map">下一题</string>
-    <string name="title_activity_settings">Settings</string>
 
-    <string name="pref_title_vibrate">Vibrate</string>
-    <string name="about_us">关于我们</string>
-    <string name="charts">抽选结果</string>
+    <string name="charts">查看报表</string>
     <string name="go_on">继续</string>
     <string name="please_select">请选择</string>
     <string name="pre_5s">前5秒</string>

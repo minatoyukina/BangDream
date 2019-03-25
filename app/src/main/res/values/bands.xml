@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="band">
+        <item>Popping Party</item>
+        <item>Afterglow</item>
+        <item>Roselia</item>
+        <item>Pastel Palettes</item>
+        <item>Hello Happy World</item>
+    </string-array>
+
+    <string name="kasumi">户山 香橙</string>
+    <string name="rimi">牛込 りみ</string>
+    <string name="arisa">市ヶ谷 有咲</string>
+    <string name="tae">花園 たえ</string>
+    <string name="saaya">山吹 沙綾</string>
+
+    <string name="ran">美竹 蘭</string>
+    <string name="himari">上原 ひまり</string>
+    <string name="tomoe">宇田川 巴</string>
+    <string name="moka">青葉 もか</string>
+    <string name="tsugumi">羽沢 つぐみ</string>
+
+    <string name="yukina">湊 友希那</string>
+    <string name="rinko">白金 燐子</string>
+    <string name="ako">宇田川 あこ</string>
+    <string name="sayo">氷川 紗夜</string>
+    <string name="risa">今井 リサ</string>
+
+    <string name="aya">丸山 彩</string>
+    <string name="hina">氷川 日菜</string>
+    <string name="chisato">白鷺 千聖</string>
+    <string name="maya">大和 麻弥</string>
+    <string name="ibu">若宮 イヴ</string>
+
+    <string name="kokoro">弦卷 こころ</string>
+    <string name="kanon">松原 花音</string>
+    <string name="kaoru">濑田 薰</string>
+    <string name="misaki">奥沢 美咲</string>
+    <string name="hagumi">北沢 はぐみ</string>
+</resources>

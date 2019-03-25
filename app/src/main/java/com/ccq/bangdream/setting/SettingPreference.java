@@ -50,7 +50,7 @@ public class SettingPreference extends PreferenceFragment {
             }
         });
 
-        Preference aboutUs = findPreference("about_us");
+        Preference aboutUs = findPreference("contract_us");
         aboutUs.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
