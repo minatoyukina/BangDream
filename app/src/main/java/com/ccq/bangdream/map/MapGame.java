@@ -25,6 +25,9 @@ public class MapGame extends AppCompatActivity {
     private ArrayList<CharSequence> titles = new ArrayList<>();
     private String value;
     private Handler handler;
+    private static int POSITION = 0;
+    private static int PRE = -1;
+    private static int NEXT = 1;
 
     @SuppressLint("HandlerLeak")
     @Override
@@ -37,13 +40,17 @@ public class MapGame extends AppCompatActivity {
         final ImageView mapBar = findViewById(R.id.map_bar);
         final Button button = findViewById(R.id.guess);
         loadMap();
+
+        final Button pre = findViewById(R.id.pre);
+        final Button next = findViewById(R.id.next);
+
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 Bundle data = msg.getData();
                 value = data.getString("value");
-                String str = data.getString("str");
+                final String str = data.getString("str");
                 TextView titleView = findViewById(R.id.map_title);
                 titleView.setText(value);
                 Spinner song = findViewById(R.id.song);
@@ -86,7 +93,22 @@ public class MapGame extends AppCompatActivity {
 
                     }
                 });
-                Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, MyCropTransformation.CropType.BOTTOM, str))).into(mapBar);
+
+                Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, MyCropTransformation.CropType.BOTTOM, POSITION))).into(mapBar);
+
+                pre.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, MyCropTransformation.CropType.BOTTOM, PRE))).into(mapBar);
+                    }
+                });
+
+                next.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, MyCropTransformation.CropType.BOTTOM, NEXT))).into(mapBar);
+                    }
+                });
             }
         };
         button.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +137,7 @@ public class MapGame extends AppCompatActivity {
                     @SuppressLint("DefaultLocale") String str = String.format("%03d", i);
                     String[] songs = td.split("--> <script>");
                     if (titles.size() == 0) {
-                        titles.add(" ✢✣✤✥❋✦✧※❇❈✢✣✤✥❋✦✧※❇❈ ");
+                        titles.add("歌曲列表: ");
                         for (String song : songs) {
                             String title = song.split("<!--")[1];
                             titles.add(title);

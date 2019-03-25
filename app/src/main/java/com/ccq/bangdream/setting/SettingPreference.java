@@ -9,12 +9,18 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import com.ccq.bangdream.R;
 import com.ccq.bangdream.util.MyApplication;
 
+import java.io.File;
+import java.util.Objects;
+
 
 public class SettingPreference extends PreferenceFragment {
+    private File file;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,11 +32,32 @@ public class SettingPreference extends PreferenceFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final Preference imgPath = findPreference("img_path");
-        imgPath.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        final Preference clearCache = findPreference("clear_cache");
+        file = Objects.requireNonNull(MyApplication.getContext().getCacheDir());
+        long totalSpace = getFolderSize(file);
+        Log.d("file", file.toString());
+        clearCache.setSummary("当前缓存大小: " + (float) totalSpace / (1024 * 1024 * 1024) + "M");
+        clearCache.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                return false;
+                delete(file);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("提示").setMessage("\n清理完成").setPositiveButton("确定", null).show();
+                clearCache.setSummary("当前缓存大小: 0M");
+                return true;
+            }
+
+
+            private void delete(File parent) {
+                if (parent.isDirectory()) {
+                    File[] files = parent.listFiles();
+                    for (File child : files) {
+                        delete(child);
+                    }
+                } else {
+                    boolean delete = parent.delete();
+                    Log.d("delete", String.valueOf(delete));
+                }
             }
         });
 
@@ -81,5 +108,31 @@ public class SettingPreference extends PreferenceFragment {
                 return false;
             }
         });
+    }
+
+    /**
+     * 获取文件夹大小
+     *
+     * @param file File实例
+     * @return long
+     */
+    private static long getFolderSize(File file) {
+
+        long size = 0;
+        try {
+            java.io.File[] fileList = file.listFiles();
+            for (File aFileList : fileList) {
+                if (aFileList.isDirectory()) {
+                    size = size + getFolderSize(aFileList);
+
+                } else {
+                    size = size + aFileList.length();
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return size;
     }
 }

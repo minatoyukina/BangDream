@@ -15,7 +15,7 @@
     <string name="other">其它</string>
     <string name="share">分享</string>
     <string name="setting">设置</string>
-    <string name="img_path">图片路径</string>
+    <string name="clear_cache">清理缓存</string>
     <string name="contract_us">联系我们</string>
     <string name="licence">开源许可</string>
     <string name="donate">赞助我们</string>
@@ -29,5 +29,6 @@
     <string name="please_select">请选择</string>
     <string name="pre_5s">前5秒</string>
     <string name="next_5s">后5秒</string>
+    <string name="current_gacha">当前扭蛋</string>
 
 </resources>

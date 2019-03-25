@@ -15,17 +15,16 @@ import java.util.Random;
 public class MyCropTransformation extends CropTransformation {
 
     private int position;
-    private String songId;
 
     private CropType cropType;
 
 
-    MyCropTransformation(int width, int height, CropType cropType, String songId) {
+    MyCropTransformation(int width, int height, CropType cropType, int position) {
         super(width, height);
         this.width = width;
         this.height = height;
         this.cropType = cropType;
-        this.songId = songId;
+        this.position = position;
     }
 
     private int width;
@@ -58,9 +57,18 @@ public class MyCropTransformation extends CropTransformation {
         Random random = new Random();
         int i = random.nextInt(pieces);
         float left = (float) (width - width * i) / 2;
-        RectF targetRect = new RectF(left, top, left + (float) toTransform.getWidth(), top + scaledHeight);
+        RectF targetRect;
+        if (position == 1) {
+            left = left + 144;
+            targetRect = new RectF(left, top, left + (float) toTransform.getWidth(), top + scaledHeight);
+        } else if (position == -1) {
+            left = left - 144;
+            targetRect = new RectF(left, top, left + (float) toTransform.getWidth(), top + scaledHeight);
+        } else {
+            targetRect = new RectF(left, top, left + (float) toTransform.getWidth(), top + scaledHeight);
+        }
         Log.d("width", String.valueOf(width));
-        Log.d("real-width", String.valueOf(toTransform.getWidth()));
+        Log.d("toTransform.getWidth()", String.valueOf(toTransform.getWidth()));
         Log.d("top", String.valueOf(top));
         Log.d("scaledHeight", String.valueOf(scaledHeight));
         Log.d("scaledWidth", String.valueOf(scaledWidth));

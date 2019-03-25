@@ -175,7 +175,14 @@ public class GachaSim extends AppCompatActivity {
                 intent.putIntegerArrayListExtra("line2", list2);
                 intent.putIntegerArrayListExtra("line3", list3);
                 intent.putIntegerArrayListExtra("line4", list4);
+
                 startActivity(intent);
+                TWO_STAR = 0;
+                THREE_STAR = 0;
+                FOUR_STAR = 0;
+                list2.clear();
+                list3.clear();
+                list4.clear();
 
             }
         });
@@ -185,5 +192,10 @@ public class GachaSim extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

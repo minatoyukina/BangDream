@@ -33,7 +33,7 @@ public class ChartResult extends AppCompatActivity {
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
         List<Integer> colors = new ArrayList<>();
         colors.add(ContextCompat.getColor(this, R.color.colorPrimary));
-        colors.add(ContextCompat.getColor(this, R.color.colorAccent));
+        colors.add(ContextCompat.getColor(this, R.color.colorRed));
         colors.add(ContextCompat.getColor(this, R.color.colorGreen));
         dataSet.setColors(colors);
 
@@ -44,9 +44,8 @@ public class ChartResult extends AppCompatActivity {
         description.setText("抽选结果");
         PieChart pieChart = findViewById(R.id.pie_chart);
         pieChart.setDescription(description);
-        pieChart.setHoleRadius(0f);
-        pieChart.setTransparentCircleRadius(0f);
-        pieChart.setUsePercentValues(true);
+//        pieChart.setHoleRadius(0f);
+//        pieChart.setTransparentCircleRadius(0f);
         pieChart.setData(pieData);
         pieChart.invalidate();
 
@@ -57,5 +56,10 @@ public class ChartResult extends AppCompatActivity {
         ArrayList<Integer> line4 = intent.getIntegerArrayListExtra("line4");
         myLineChart.initLineChart(lineChart, line2, line3, line4);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }
