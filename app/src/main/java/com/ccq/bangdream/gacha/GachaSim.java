@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
+import com.ccq.bangdream.MainActivity;
 import com.ccq.bangdream.R;
 import com.ccq.bangdream.greendao.CardDao;
 import com.ccq.bangdream.greendao.DaoMaster;
@@ -76,10 +77,10 @@ public class GachaSim extends AppCompatActivity {
                 Message msg = new Message();
                 Bundle data = new Bundle();
                 try {
-                    Document document = Jsoup.connect("https://bandori.party/events/")
+                    Document document = Jsoup.connect("https://bandori.party/gachas/")
                             .userAgent("Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Mobile Safari/537.36")
                             .get();
-                    String url = document.select("div[class=row items]").select("img").attr("src");
+                    String url = document.select("div[class=text-center top-item]").select("img").attr("src");
                     url = "http://" + url;
                     data.putString("value", url);
                     msg.setData(data);
@@ -197,5 +198,7 @@ public class GachaSim extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

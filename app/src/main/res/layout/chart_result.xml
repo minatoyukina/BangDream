@@ -5,29 +5,17 @@
               android:orientation="vertical"
               android:padding="15dp">
 
-    <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="抽选结果"/>
 
     <com.github.mikephil.charting.charts.PieChart
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:id="@+id/pie_chart"
             android:layout_gravity="center_horizontal">
     </com.github.mikephil.charting.charts.PieChart>
 
-    <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="稀有度走势"/>
-
     <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/line_Chart"
             android:layout_width="match_parent"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:layout_height="220dp"/>
 
 </LinearLayout>
