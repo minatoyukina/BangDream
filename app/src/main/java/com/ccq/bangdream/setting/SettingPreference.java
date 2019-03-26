@@ -36,7 +36,7 @@ public class SettingPreference extends PreferenceFragment {
         file = Objects.requireNonNull(MyApplication.getContext().getCacheDir());
         long totalSpace = getFolderSize(file);
         Log.d("file", file.toString());
-        clearCache.setSummary("当前缓存大小: " + (float) totalSpace / (1024 * 1024 * 1024) + "M");
+        clearCache.setSummary("当前缓存大小: " + (float) totalSpace / (1024 * 1024) + "M");
         clearCache.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {

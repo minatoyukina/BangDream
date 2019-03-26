@@ -2,14 +2,18 @@ package com.ccq.bangdream.map;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.ccq.bangdream.R;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -25,9 +29,12 @@ public class MapGame extends AppCompatActivity {
     private ArrayList<CharSequence> titles = new ArrayList<>();
     private String value;
     private Handler handler;
-    private static int POSITION = 0;
-    private static int PRE = -1;
-    private static int NEXT = 1;
+
+    private float width;
+    private Bitmap bitmap;
+
+    private int j;
+    private int k;
 
     @SuppressLint("HandlerLeak")
     @Override
@@ -94,27 +101,43 @@ public class MapGame extends AppCompatActivity {
                     }
                 });
 
-                Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, MyCropTransformation.CropType.BOTTOM, POSITION))).into(mapBar);
-
-                pre.setOnClickListener(new View.OnClickListener() {
+                Glide.with(MapGame.this).asBitmap().load("http://www.sdvx.in/bandri/bg/" + str + "bg.png").into(new SimpleTarget<Bitmap>() {
                     @Override
-                    public void onClick(View view) {
-                        Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, MyCropTransformation.CropType.BOTTOM, PRE))).into(mapBar);
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        width = resource.getWidth();
+                        bitmap = resource;
+                        Random random = new Random();
+                        final int i = random.nextInt(Math.round(width / 144));
+                        Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, i, bitmap))).into(mapBar);
+
+                        pre.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, i + (--j) * 2, bitmap))).into(mapBar);
+                                Log.d("j", String.valueOf(j));
+                            }
+                        });
+
+                        next.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, i + (++k) * 2, bitmap))).into(mapBar);
+                                Log.d("k", String.valueOf(k));
+                            }
+                        });
+
                     }
                 });
 
-                next.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, MyCropTransformation.CropType.BOTTOM, NEXT))).into(mapBar);
-                    }
-                });
+
             }
         };
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loadMap();
+                k = 0;
+                j = 0;
             }
         });
     }

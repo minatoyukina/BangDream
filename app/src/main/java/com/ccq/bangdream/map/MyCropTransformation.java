@@ -9,26 +9,23 @@ import android.util.Log;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import jp.wasabeef.glide.transformations.CropTransformation;
 
-import java.util.Random;
-
 
 public class MyCropTransformation extends CropTransformation {
 
     private int position;
+    private Bitmap bgBitmap;
 
-    private CropType cropType;
-
-
-    MyCropTransformation(int width, int height, CropType cropType, int position) {
+    MyCropTransformation(int width, int height, int position, Bitmap bgBitmap) {
         super(width, height);
         this.width = width;
         this.height = height;
-        this.cropType = cropType;
         this.position = position;
+        this.bgBitmap = bgBitmap;
     }
 
     private int width;
     private int height;
+
 
 
     @Override
@@ -44,36 +41,18 @@ public class MyCropTransformation extends CropTransformation {
 
         bitmap.setHasAlpha(true);
 
-        float scaleX = (float) width / toTransform.getWidth();
-        float scaleY = (float) height / toTransform.getHeight();
-        float scale = Math.max(scaleX, scaleY);
+        float realWidth = toTransform.getWidth();
 
-        float scaledWidth = scale * toTransform.getWidth();
-        float scaledHeight = scale * toTransform.getHeight();
-        float top = getTop(scaledHeight);
-//        float left = (width - (float)toTransform.getWidth()) / 2;
+        float left = (float) (width - width * position) / 2;
 
-        int pieces = Math.round((float) toTransform.getWidth() / width);
-        Random random = new Random();
-        int i = random.nextInt(pieces);
-        float left = (float) (width - width * i) / 2;
-        RectF targetRect;
-        if (position == 1) {
-            left = left + 144;
-            targetRect = new RectF(left, top, left + (float) toTransform.getWidth(), top + scaledHeight);
-        } else if (position == -1) {
-            left = left - 144;
-            targetRect = new RectF(left, top, left + (float) toTransform.getWidth(), top + scaledHeight);
-        } else {
-            targetRect = new RectF(left, top, left + (float) toTransform.getWidth(), top + scaledHeight);
-        }
-        Log.d("width", String.valueOf(width));
-        Log.d("toTransform.getWidth()", String.valueOf(toTransform.getWidth()));
-        Log.d("top", String.valueOf(top));
-        Log.d("scaledHeight", String.valueOf(scaledHeight));
-        Log.d("scaledWidth", String.valueOf(scaledWidth));
+        RectF targetRect = new RectF(left, 0, left + realWidth, height);
+
+        Log.d("left", String.valueOf(left));
+        Log.d("realWidth", String.valueOf(realWidth));
+
 
         Canvas canvas = new Canvas(bitmap);
+        canvas.drawBitmap(bgBitmap, null, targetRect, null);
         canvas.drawBitmap(toTransform, null, targetRect, null);
 
         return bitmap;
@@ -81,20 +60,7 @@ public class MyCropTransformation extends CropTransformation {
 
     @Override
     public String key() {
-        return "CropTransformation(width=" + width + ", height=" + height + ", cropType=" + cropType
-                + ")";
+        return "CropTransformation(width=" + width + ", height=" + height + ")";
     }
 
-    private float getTop(float scaledHeight) {
-        switch (cropType) {
-            case TOP:
-                return 0;
-            case CENTER:
-                return (height - scaledHeight) / 2;
-            case BOTTOM:
-                return height - scaledHeight;
-            default:
-                return 0;
-        }
-    }
 }

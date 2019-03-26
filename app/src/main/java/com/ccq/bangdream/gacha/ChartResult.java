@@ -1,7 +1,6 @@
 package com.ccq.bangdream.gacha;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -32,7 +31,7 @@ public class ChartResult extends AppCompatActivity {
         pieEntries.add(new PieEntry(pies[1] / sum * 100, "三星"));
         pieEntries.add(new PieEntry(pies[2] / sum * 100, "四星"));
 
-        PieDataSet dataSet = new PieDataSet(pieEntries, "占比");
+        PieDataSet dataSet = new PieDataSet(pieEntries, "");
         List<Integer> colors = new ArrayList<>();
         colors.add(ContextCompat.getColor(this, R.color.colorPrimary));
         colors.add(ContextCompat.getColor(this, R.color.colorRed));

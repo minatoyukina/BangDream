@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.ccq.bangdream.MainActivity;
 import com.ccq.bangdream.R;
@@ -42,6 +43,8 @@ public class GachaSim extends AppCompatActivity {
     private ArrayList<Integer> list2 = new ArrayList<>();
     private ArrayList<Integer> list3 = new ArrayList<>();
     private ArrayList<Integer> list4 = new ArrayList<>();
+
+    private static int STAR_COUNT;
 
 
     @Override
@@ -151,6 +154,9 @@ public class GachaSim extends AppCompatActivity {
                 Button chart = findViewById(R.id.charts);
                 goOn.setVisibility(View.VISIBLE);
                 chart.setVisibility(View.VISIBLE);
+
+                TextView starCount = findViewById(R.id.star_count);
+                starCount.setText("已使用星星: " + (++STAR_COUNT) * 2500);
             }
         });
 
@@ -181,6 +187,7 @@ public class GachaSim extends AppCompatActivity {
                 TWO_STAR = 0;
                 THREE_STAR = 0;
                 FOUR_STAR = 0;
+                STAR_COUNT = 0;
                 list2.clear();
                 list3.clear();
                 list4.clear();
