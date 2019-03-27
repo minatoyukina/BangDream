@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import com.ccq.bangdream.R;
+import com.ccq.bangdream.util.CheckUpdateUtil;
 import com.ccq.bangdream.util.MyApplication;
 
 import java.io.File;
@@ -71,6 +72,23 @@ public class SettingPreference extends PreferenceFragment {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        dialog.setTitle("检查更新");
+        boolean flag = CheckUpdateUtil.checkUpdate();
+        if (flag) {
+            dialog.setMessage("\n有新版本").show();
+            dialog.setPositiveButton("去更新", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            dialog.setNegativeButton("忽略", null);
+            dialog.show();
+        } else {
+            dialog.setPositiveButton("确定", null);
+            dialog.setMessage("\n已是最新版本").show();
+        }
         update.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -97,6 +115,7 @@ public class SettingPreference extends PreferenceFragment {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
                 dialog.setTitle("开源库");
                 dialog.setItems(items, null);
+                dialog.setPositiveButton("确定", null);
                 dialog.show();
                 return true;
             }
@@ -108,10 +127,10 @@ public class SettingPreference extends PreferenceFragment {
             public boolean onPreferenceClick(Preference preference) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
                 String[] items = {
-                        "查卡器: http://bandori.party",
-                        "谱面保管所: http://www.sdvx.in/bandri/sort/def.htm",
-                        "官方twitter: http://twitter.com/bang_dream_gbp",
-                        "ガルサ主页: http://github.com/minatoyukina/BangDream"};
+                        "bandori.party",
+                        "谱面保管所",
+                        "官方twitter",
+                        "ガルサ主页"};
                 dialog.setTitle("special links").setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

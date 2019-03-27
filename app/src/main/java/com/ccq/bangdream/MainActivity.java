@@ -30,6 +30,7 @@ import com.ccq.bangdream.gacha.GachaSim;
 import com.ccq.bangdream.map.MapGame;
 import com.ccq.bangdream.score.ScoreSum;
 import com.ccq.bangdream.setting.ActivityWithPreferenceFragment;
+import com.ccq.bangdream.util.CheckUpdateUtil;
 import com.ccq.bangdream.util.MyApplication;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -86,6 +87,16 @@ public class MainActivity extends AppCompatActivity
                         super.onPageFinished(view, url);
                         loadCss();
                         dialog.dismiss();
+                        try {
+                            AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                            dialog.setTitle("检查更新").setPositiveButton("确定", null);
+                            boolean update = CheckUpdateUtil.checkUpdate();
+                            if (update) {
+                                dialog.setMessage("\n有新版本").show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
 
