@@ -63,10 +63,4 @@ public class ChartResult extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        finish();
-        Intent intent = new Intent(this, GachaSim.class);
-        startActivity(intent);
-    }
 }

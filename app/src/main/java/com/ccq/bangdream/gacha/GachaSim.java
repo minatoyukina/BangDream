@@ -15,7 +15,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
-import com.ccq.bangdream.MainActivity;
 import com.ccq.bangdream.R;
 import com.ccq.bangdream.greendao.CardDao;
 import com.ccq.bangdream.greendao.DaoMaster;
@@ -46,6 +45,11 @@ public class GachaSim extends AppCompatActivity {
 
     private static int STAR_COUNT;
 
+    private GridView listView;
+    private Button goOn;
+    private Button chart;
+    private TextView starCount;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +58,10 @@ public class GachaSim extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         setContentView(R.layout.activity_gacha);
+        listView = findViewById(R.id.card_list);
+        goOn = findViewById(R.id.go_on);
+        chart = findViewById(R.id.charts);
+        starCount = findViewById(R.id.star_count);
         SQLiteService service = new SQLiteService(GachaSim.this, DB_PATH, null, 1);
 
         SQLiteDatabase readableDatabase = service.getReadableDatabase();
@@ -96,6 +104,7 @@ public class GachaSim extends AppCompatActivity {
         new Thread(networkTask).start();
 
         button.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 ArrayList<String> picList = new ArrayList<>();
@@ -132,7 +141,7 @@ public class GachaSim extends AppCompatActivity {
                     Log.d("list", s);
                 }
 
-                GridView listView = findViewById(R.id.card_list);
+                listView.setVisibility(View.VISIBLE);
                 listView.setAdapter(new GachaListAdapter(GachaSim.this, picList));
                 if (list2.size() == 0) {
                     list2.add((int) TWO_STAR);
@@ -150,13 +159,11 @@ public class GachaSim extends AppCompatActivity {
                     list4.add((int) FOUR_STAR - ListSumUtil.sum(list4));
                 }
 
-                Button goOn = findViewById(R.id.go_on);
-                Button chart = findViewById(R.id.charts);
                 goOn.setVisibility(View.VISIBLE);
                 chart.setVisibility(View.VISIBLE);
 
                 TextView starCount = findViewById(R.id.star_count);
-                starCount.setText("已使用星星: " + (++STAR_COUNT) * 2500);
+                starCount.setText(getString(R.string.using_star) + (++STAR_COUNT) * 2500);
             }
         });
 
@@ -184,14 +191,6 @@ public class GachaSim extends AppCompatActivity {
                 intent.putIntegerArrayListExtra("line4", list4);
 
                 startActivity(intent);
-                TWO_STAR = 0;
-                THREE_STAR = 0;
-                FOUR_STAR = 0;
-                STAR_COUNT = 0;
-                list2.clear();
-                list3.clear();
-                list4.clear();
-
             }
         });
     }
@@ -203,9 +202,18 @@ public class GachaSim extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        finish();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+    protected void onResume() {
+        super.onResume();
+        TWO_STAR = 0;
+        THREE_STAR = 0;
+        FOUR_STAR = 0;
+        STAR_COUNT = 0;
+        list2.clear();
+        list3.clear();
+        list4.clear();
+        listView.setVisibility(View.INVISIBLE);
+        goOn.setVisibility(View.INVISIBLE);
+        chart.setVisibility(View.INVISIBLE);
+        starCount.setText("");
     }
 }

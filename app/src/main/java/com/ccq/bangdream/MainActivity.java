@@ -1,6 +1,7 @@
 package com.ccq.bangdream;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     private WebView webView;
 
     private long mPressedTime = 0;
+    private boolean flag = true;
 
     @SuppressLint({"SetJavaScriptEnabled", "InflateParams"})
     @Override
@@ -87,15 +89,24 @@ public class MainActivity extends AppCompatActivity
                         super.onPageFinished(view, url);
                         loadCss();
                         dialog.dismiss();
-                        try {
-                            AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-                            dialog.setTitle("检查更新").setPositiveButton("确定", null);
-                            boolean update = CheckUpdateUtil.checkUpdate();
-                            if (update) {
-                                dialog.setMessage("\n有新版本").show();
+                        if (flag) {
+                            try {
+                                final AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                                boolean update = CheckUpdateUtil.checkUpdate();
+                                if (update) {
+                                    dialog.setMessage("\n有新版本");
+                                    dialog.setTitle("检查更新").setPositiveButton("确定", null);
+                                    dialog.setNegativeButton("暂不更新", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            flag = false;
+                                        }
+                                    });
+                                    dialog.show();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
                     }
                 });

@@ -31,5 +31,6 @@
     <string name="next_5s">后5秒</string>
     <string name="current_gacha">当前扭蛋</string>
     <string name="special_links">一些链接</string>
+    <string name="using_star">已使用星星:</string>
 
 </resources>

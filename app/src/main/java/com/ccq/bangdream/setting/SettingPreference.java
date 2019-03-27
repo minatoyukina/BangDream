@@ -72,27 +72,28 @@ public class SettingPreference extends PreferenceFragment {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-        dialog.setTitle("检查更新");
-        boolean flag = CheckUpdateUtil.checkUpdate();
-        if (flag) {
-            dialog.setMessage("\n有新版本").show();
-            dialog.setPositiveButton("去更新", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
 
-                }
-            });
-            dialog.setNegativeButton("忽略", null);
-            dialog.show();
-        } else {
-            dialog.setPositiveButton("确定", null);
-            dialog.setMessage("\n已是最新版本").show();
-        }
         update.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                return false;
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                dialog.setTitle("检查更新");
+                boolean flag = CheckUpdateUtil.checkUpdate();
+                if (flag) {
+                    dialog.setMessage("\n有新版本");
+                    dialog.setPositiveButton("去更新", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    dialog.setNegativeButton("忽略", null);
+                    dialog.show();
+                } else {
+                    dialog.setPositiveButton("确定", null);
+                    dialog.setMessage("\n已是最新版本").show();
+                }
+                return true;
             }
         });
 
