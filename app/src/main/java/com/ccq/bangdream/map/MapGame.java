@@ -113,7 +113,7 @@ public class MapGame extends AppCompatActivity {
                         pre.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, i + (--j) * 2, bitmap))).into(mapBar);
+                                Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, i + (--j), bitmap))).into(mapBar);
                                 Log.d("j", String.valueOf(j));
                             }
                         });
@@ -121,7 +121,7 @@ public class MapGame extends AppCompatActivity {
                         next.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, i + (++k) * 2, bitmap))).into(mapBar);
+                                Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, i + (++k), bitmap))).into(mapBar);
                                 Log.d("k", String.valueOf(k));
                             }
                         });

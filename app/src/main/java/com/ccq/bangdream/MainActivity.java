@@ -23,6 +23,7 @@ import android.view.Window;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 import com.ccq.bangdream.card.LoadCards;
 import com.ccq.bangdream.event.LoadEvents;
 import com.ccq.bangdream.gacha.GachaSim;
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Intent intent;
     private WebView webView;
+
+    private long mPressedTime = 0;
 
     @SuppressLint({"SetJavaScriptEnabled", "InflateParams"})
     @Override
@@ -138,7 +141,14 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            long mNowTime = System.currentTimeMillis();//获取第一次按键时间
+            if ((mNowTime - mPressedTime) > 2000) {//比较两次按键时间差
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                mPressedTime = mNowTime;
+            } else {//退出程序
+                this.finish();
+                System.exit(0);
+            }
         }
     }
 
@@ -215,5 +225,4 @@ public class MainActivity extends AppCompatActivity
             Log.d("test", e.getMessage());
         }
     }
-
 }

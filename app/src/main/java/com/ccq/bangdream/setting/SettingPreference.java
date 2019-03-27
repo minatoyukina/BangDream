@@ -1,5 +1,6 @@
 package com.ccq.bangdream.setting;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -36,14 +37,14 @@ public class SettingPreference extends PreferenceFragment {
         file = Objects.requireNonNull(MyApplication.getContext().getCacheDir());
         long totalSpace = getFolderSize(file);
         Log.d("file", file.toString());
-        clearCache.setSummary("当前缓存大小: " + (float) totalSpace / (1024 * 1024) + "M");
+        clearCache.setSummary("已使用缓存大小: " + (float) totalSpace / (1024 * 1024) + "M");
         clearCache.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 delete(file);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("提示").setMessage("\n清理完成").setPositiveButton("确定", null).show();
-                clearCache.setSummary("当前缓存大小: 0M");
+                clearCache.setSummary("已使用缓存大小: 0M");
                 return true;
             }
 
@@ -101,6 +102,43 @@ public class SettingPreference extends PreferenceFragment {
             }
         });
 
+        Preference specialLinks = findPreference("special_links");
+        specialLinks.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                String[] items = {
+                        "查卡器: http://bandori.party",
+                        "谱面保管所: http://www.sdvx.in/bandri/sort/def.htm",
+                        "官方twitter: http://twitter.com/bang_dream_gbp",
+                        "ガルサ主页: http://github.com/minatoyukina/BangDream"};
+                dialog.setTitle("special links").setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent();
+                        switch (i) {
+                            case 0:
+                                intent.setData(Uri.parse("http://bandori.party"));
+                                break;
+                            case 1:
+                                intent.setData(Uri.parse("http://www.sdvx.in/bandri/sort/def.htm"));
+                                break;
+                            case 2:
+                                intent.setData(Uri.parse("http://twitter.com/bang_dream_gbp"));
+                                break;
+                            case 3:
+                                intent.setData(Uri.parse("http://github.com/minatoyukina/BangDream"));
+                                break;
+                            default:
+                                break;
+                        }
+                        startActivity(intent);
+                    }
+
+                }).setPositiveButton("确定", null).show();
+                return true;
+            }
+        });
         Preference donate = findPreference("donate");
         donate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override

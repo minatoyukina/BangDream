@@ -43,7 +43,7 @@ public class MyCropTransformation extends CropTransformation {
 
         float realWidth = toTransform.getWidth();
 
-        float left = (float) (width - width * position) / 2;
+        float left = (float) (width - width * position);
 
         RectF targetRect = new RectF(left, 0, left + realWidth, height);
 

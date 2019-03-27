@@ -30,5 +30,6 @@
     <string name="pre_5s">前5秒</string>
     <string name="next_5s">后5秒</string>
     <string name="current_gacha">当前扭蛋</string>
+    <string name="special_links">一些链接</string>
 
 </resources>

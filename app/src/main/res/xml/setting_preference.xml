@@ -9,12 +9,16 @@
             android:title="@string/update"/>
     <Preference
             android:key="contract_us"
-            android:summary="minatoyukina@github.com"
+            android:summary="uzi9mm7@gmail.com"
             android:title="@string/contract_us"/>
     <Preference
             android:key="licence"
             android:summary="本程序的诞生离不开众多开源项目的支持"
             android:title="@string/licence"/>
+    <Preference
+            android:key="special_links"
+            android:summary="special links"
+            android:title="@string/special_links"/>
     <Preference
             android:key="donate"
             android:summary="donate is never required but always appreciated"
