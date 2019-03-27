@@ -17,10 +17,10 @@
             android:title="@string/licence"/>
     <Preference
             android:key="special_links"
-            android:summary="special links"
+            android:summary="some special links"
             android:title="@string/special_links"/>
-    <Preference
-            android:key="donate"
-            android:summary="donate is never required but always appreciated"
-            android:title="@string/donate"/>
+    <!--<Preference-->
+    <!--android:key="donate"-->
+    <!--android:summary="donate is never required but always appreciated"-->
+    <!--android:title="@string/donate"/>-->
 </PreferenceScreen>

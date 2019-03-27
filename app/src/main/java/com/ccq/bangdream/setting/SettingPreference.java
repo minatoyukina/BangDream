@@ -84,7 +84,8 @@ public class SettingPreference extends PreferenceFragment {
                     dialog.setPositiveButton("去更新", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/minatoyukina/BangDream/releases"));
+                            startActivity(intent);
                         }
                     });
                     dialog.setNegativeButton("忽略", null);
@@ -133,21 +134,23 @@ public class SettingPreference extends PreferenceFragment {
                         "官方twitter",
                         "ガルサ主页"};
                 dialog.setTitle("special links").setItems(items, new DialogInterface.OnClickListener() {
+                    Intent intent;
+
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent();
+
                         switch (i) {
                             case 0:
-                                intent.setData(Uri.parse("http://bandori.party"));
+                                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://bandori.party"));
                                 break;
                             case 1:
-                                intent.setData(Uri.parse("http://www.sdvx.in/bandri/sort/def.htm"));
+                                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.sdvx.in/bandri/sort/def.htm"));
                                 break;
                             case 2:
-                                intent.setData(Uri.parse("http://twitter.com/bang_dream_gbp"));
+                                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://twitter.com/bang_dream_gbp"));
                                 break;
                             case 3:
-                                intent.setData(Uri.parse("http://github.com/minatoyukina/BangDream"));
+                                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://github.com/minatoyukina/BangDream"));
                                 break;
                             default:
                                 break;
@@ -159,13 +162,14 @@ public class SettingPreference extends PreferenceFragment {
                 return true;
             }
         });
-        Preference donate = findPreference("donate");
-        donate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                return false;
-            }
-        });
+
+//        Preference donate = findPreference("donate");
+//        donate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+//            @Override
+//            public boolean onPreferenceClick(Preference preference) {
+//                return false;
+//            }
+//        });
     }
 
     /**

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -95,7 +96,13 @@ public class MainActivity extends AppCompatActivity
                                 boolean update = CheckUpdateUtil.checkUpdate();
                                 if (update) {
                                     dialog.setMessage("\n有新版本");
-                                    dialog.setTitle("检查更新").setPositiveButton("确定", null);
+                                    dialog.setTitle("检查更新").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/minatoyukina/BangDream/releases"));
+                                            startActivity(intent);
+                                        }
+                                    });
                                     dialog.setNegativeButton("暂不更新", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -176,8 +183,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+//        getMenuInflater().inflate(R.menu.main, menu);
+        return false;
     }
 
     @Override
