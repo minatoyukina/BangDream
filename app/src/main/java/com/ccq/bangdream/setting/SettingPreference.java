@@ -132,7 +132,7 @@ public class SettingPreference extends PreferenceFragment {
                         "bandori.party",
                         "谱面保管所",
                         "官方twitter",
-                        "ガルサ主页"};
+                        "日服下载更新"};
                 dialog.setTitle("special links").setItems(items, new DialogInterface.OnClickListener() {
                     Intent intent;
 
@@ -150,7 +150,7 @@ public class SettingPreference extends PreferenceFragment {
                                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://twitter.com/bang_dream_gbp"));
                                 break;
                             case 3:
-                                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://github.com/minatoyukina/BangDream"));
+                                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://apps.qoo-app.com/app/4847"));
                                 break;
                             default:
                                 break;

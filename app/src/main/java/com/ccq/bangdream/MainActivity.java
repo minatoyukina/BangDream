@@ -33,12 +33,14 @@ import com.ccq.bangdream.map.MapGame;
 import com.ccq.bangdream.setting.ActivityWithPreferenceFragment;
 import com.ccq.bangdream.util.CheckUpdateUtil;
 import com.ccq.bangdream.util.MyApplication;
+import com.ccq.bangdream.util.UAUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -127,8 +129,7 @@ public class MainActivity extends AppCompatActivity
                 Bundle data = new Bundle();
                 try {
                     Document document = Jsoup.connect("https://bandori.party/events/")
-                            .userAgent("Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Mobile Safari/537.36")
-                            .get();
+                            .userAgent(UAUtil.UserAgent[new Random().nextInt(UAUtil.UserAgent.length)]).get();
                     String url = document.select("div[class=row items]").select("a").attr("href");
                     url = "http://bandori.party" + url;
                     data.putString("value", url);
