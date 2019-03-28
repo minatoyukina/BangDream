@@ -2,7 +2,6 @@ package com.ccq.bangdream.greendao;
 
 import java.util.List;
 import java.util.ArrayList;
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
 
@@ -40,6 +39,7 @@ public class CardDao extends AbstractDao<Card, Integer> {
         public final static Property Skill = new Property(6, String.class, "skill", false, "SKILL");
         public final static Property Icon = new Property(7, String.class, "icon", false, "ICON");
         public final static Property Icon_trained = new Property(8, String.class, "icon_trained", false, "ICON_TRAINED");
+        public final static Property Access = new Property(9, Integer.class, "access", false, "ACCESS");
     }
 
     private DaoSession daoSession;
@@ -58,7 +58,7 @@ public class CardDao extends AbstractDao<Card, Integer> {
      * Creates the underlying database table.
      */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
+        String constraint = ifNotExists ? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"CARD\" (" + //
                 "\"ID\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"NUMBER\" INTEGER," + // 1: number
@@ -68,12 +68,11 @@ public class CardDao extends AbstractDao<Card, Integer> {
                 "\"ATTRIBUTE\" TEXT," + // 5: attribute
                 "\"SKILL\" TEXT," + // 6: skill
                 "\"ICON\" TEXT," + // 7: icon
-                "\"ICON_TRAINED\" TEXT);"); // 8: icon_trained
+                "\"ICON_TRAINED\" TEXT," + // 8: icon_trained
+                "\"ACCESS\" INTEGER);"); // 9: access
     }
 
-    /**
-     * Drops the underlying database table.
-     */
+    /** Drops the underlying database table. */
     public static void dropTable(Database db, boolean ifExists) {
         String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"CARD\"";
         db.execSQL(sql);
@@ -82,100 +81,110 @@ public class CardDao extends AbstractDao<Card, Integer> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, Card entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         Integer number = entity.getNumber();
         if (number != null) {
             stmt.bindLong(2, number);
         }
-
+ 
         String member = entity.getMember();
         if (member != null) {
             stmt.bindString(3, member);
         }
-
+ 
         String title = entity.getTitle();
         if (title != null) {
             stmt.bindString(4, title);
         }
-
+ 
         Byte rarity = entity.getRarity();
         if (rarity != null) {
             stmt.bindLong(5, rarity);
         }
-
+ 
         String attribute = entity.getAttribute();
         if (attribute != null) {
             stmt.bindString(6, attribute);
         }
-
+ 
         String skill = entity.getSkill();
         if (skill != null) {
             stmt.bindString(7, skill);
         }
-
+ 
         String icon = entity.getIcon();
         if (icon != null) {
             stmt.bindString(8, icon);
         }
-
+ 
         String icon_trained = entity.getIcon_trained();
         if (icon_trained != null) {
             stmt.bindString(9, icon_trained);
+        }
+
+        Integer access = entity.getAccess();
+        if (access != null) {
+            stmt.bindLong(10, access);
         }
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, Card entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         Integer number = entity.getNumber();
         if (number != null) {
             stmt.bindLong(2, number);
         }
-
+ 
         String member = entity.getMember();
         if (member != null) {
             stmt.bindString(3, member);
         }
-
+ 
         String title = entity.getTitle();
         if (title != null) {
             stmt.bindString(4, title);
         }
-
+ 
         Byte rarity = entity.getRarity();
         if (rarity != null) {
             stmt.bindLong(5, rarity);
         }
-
+ 
         String attribute = entity.getAttribute();
         if (attribute != null) {
             stmt.bindString(6, attribute);
         }
-
+ 
         String skill = entity.getSkill();
         if (skill != null) {
             stmt.bindString(7, skill);
         }
-
+ 
         String icon = entity.getIcon();
         if (icon != null) {
             stmt.bindString(8, icon);
         }
-
+ 
         String icon_trained = entity.getIcon_trained();
         if (icon_trained != null) {
             stmt.bindString(9, icon_trained);
+        }
+
+        Integer access = entity.getAccess();
+        if (access != null) {
+            stmt.bindLong(10, access);
         }
     }
 
@@ -188,7 +197,7 @@ public class CardDao extends AbstractDao<Card, Integer> {
     @Override
     public Integer readKey(Cursor cursor, int offset) {
         return cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0);
-    }
+    }    
 
     @Override
     public Card readEntity(Cursor cursor, int offset) {
@@ -201,11 +210,12 @@ public class CardDao extends AbstractDao<Card, Integer> {
                 cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // attribute
                 cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // skill
                 cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // icon
-                cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // icon_trained
+                cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // icon_trained
+                cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9) // access
         );
         return entity;
     }
-
+     
     @Override
     public void readEntity(Cursor cursor, Card entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0));
@@ -217,13 +227,14 @@ public class CardDao extends AbstractDao<Card, Integer> {
         entity.setSkill(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setIcon(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
         entity.setIcon_trained(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
-    }
-
+        entity.setAccess(cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9));
+     }
+    
     @Override
     protected final Integer updateKeyAfterInsert(Card entity, long rowId) {
         return entity.getId();
     }
-
+    
     @Override
     public Integer getKey(Card entity) {
         if (entity != null) {
@@ -242,7 +253,7 @@ public class CardDao extends AbstractDao<Card, Integer> {
     protected final boolean isEntityUpdateable() {
         return true;
     }
-
+    
     private String selectDeep;
 
     protected String getSelectDeep() {
@@ -258,7 +269,7 @@ public class CardDao extends AbstractDao<Card, Integer> {
         }
         return selectDeep;
     }
-
+    
     protected Card loadCurrentDeep(Cursor cursor, boolean lock) {
         Card entity = loadCurrent(cursor, 0, lock);
         int offset = getAllColumns().length;
@@ -266,7 +277,7 @@ public class CardDao extends AbstractDao<Card, Integer> {
         Panel panel = loadCurrentOther(daoSession.getPanelDao(), cursor, offset);
         entity.setPanel(panel);
 
-        return entity;
+        return entity;    
     }
 
     public Card loadDeep(Long key) {
@@ -280,9 +291,9 @@ public class CardDao extends AbstractDao<Card, Integer> {
         SqlUtils.appendColumnsEqValue(builder, "T", getPkColumns());
         String sql = builder.toString();
 
-        String[] keyArray = new String[]{key.toString()};
+        String[] keyArray = new String[]{key.toString() };
         Cursor cursor = db.rawQuery(sql, keyArray);
-
+        
         try {
             boolean available = cursor.moveToFirst();
             if (!available) {
@@ -296,13 +307,11 @@ public class CardDao extends AbstractDao<Card, Integer> {
         }
     }
 
-    /**
-     * Reads all available rows from the given cursor and returns a list of new ImageTO objects.
-     */
+    /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
     public List<Card> loadAllDeepFromCursor(Cursor cursor) {
         int count = cursor.getCount();
         List<Card> list = new ArrayList<Card>(count);
-
+        
         if (cursor.moveToFirst()) {
             if (identityScope != null) {
                 identityScope.lock();
@@ -320,7 +329,7 @@ public class CardDao extends AbstractDao<Card, Integer> {
         }
         return list;
     }
-
+    
     protected List<Card> loadDeepAllAndCloseCursor(Cursor cursor) {
         try {
             return loadAllDeepFromCursor(cursor);
@@ -330,12 +339,10 @@ public class CardDao extends AbstractDao<Card, Integer> {
     }
 
 
-    /**
-     * A raw-style query where you can pass any WHERE clause and arguments.
-     */
+    /** A raw-style query where you can pass any WHERE clause and arguments. */
     public List<Card> queryDeep(String where, String... selectionArg) {
         Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
         return loadDeepAllAndCloseCursor(cursor);
     }
-
+ 
 }

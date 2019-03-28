@@ -45,7 +45,7 @@ public class PanelDao extends AbstractDao<Panel, Integer> {
      * Creates the underlying database table.
      */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
+        String constraint = ifNotExists ? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"PANEL\" (" + //
                 "\"NUMBER\" INTEGER PRIMARY KEY ," + // 0: number
                 "\"PERFORMANCE\" INTEGER NOT NULL ," + // 1: performance
@@ -54,9 +54,7 @@ public class PanelDao extends AbstractDao<Panel, Integer> {
                 "\"OVERALL\" INTEGER NOT NULL );"); // 4: overall
     }
 
-    /**
-     * Drops the underlying database table.
-     */
+    /** Drops the underlying database table. */
     public static void dropTable(Database db, boolean ifExists) {
         String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"PANEL\"";
         db.execSQL(sql);
@@ -65,7 +63,7 @@ public class PanelDao extends AbstractDao<Panel, Integer> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, Panel entity) {
         stmt.clearBindings();
-
+ 
         Integer number = entity.getNumber();
         if (number != null) {
             stmt.bindLong(1, number);
@@ -79,7 +77,7 @@ public class PanelDao extends AbstractDao<Panel, Integer> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, Panel entity) {
         stmt.clearBindings();
-
+ 
         Integer number = entity.getNumber();
         if (number != null) {
             stmt.bindLong(1, number);
@@ -93,7 +91,7 @@ public class PanelDao extends AbstractDao<Panel, Integer> {
     @Override
     public Integer readKey(Cursor cursor, int offset) {
         return cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0);
-    }
+    }    
 
     @Override
     public Panel readEntity(Cursor cursor, int offset) {
@@ -106,7 +104,7 @@ public class PanelDao extends AbstractDao<Panel, Integer> {
         );
         return entity;
     }
-
+     
     @Override
     public void readEntity(Cursor cursor, Panel entity, int offset) {
         entity.setNumber(cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0));
@@ -114,13 +112,13 @@ public class PanelDao extends AbstractDao<Panel, Integer> {
         entity.setTechnique(cursor.getInt(offset + 2));
         entity.setVisual(cursor.getInt(offset + 3));
         entity.setOverall(cursor.getInt(offset + 4));
-    }
-
+     }
+    
     @Override
     protected final Integer updateKeyAfterInsert(Panel entity, long rowId) {
         return entity.getNumber();
     }
-
+    
     @Override
     public Integer getKey(Panel entity) {
         if (entity != null) {
@@ -139,5 +137,5 @@ public class PanelDao extends AbstractDao<Panel, Integer> {
     protected final boolean isEntityUpdateable() {
         return true;
     }
-
+    
 }

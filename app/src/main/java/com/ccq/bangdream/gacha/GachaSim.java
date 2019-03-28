@@ -108,30 +108,32 @@ public class GachaSim extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ArrayList<String> picList = new ArrayList<>();
+                Card card5 = cardDao.queryBuilder().where(CardDao.Properties.Id.eq(1)).unique();
+                Log.d("card", card5.toString());
                 Random random = new Random();
                 for (int i = 0; i < 9; i++) {
                     int nextInt = random.nextInt(200);
                     if (nextInt < 6) {
-                        List<Card> list = cardDao.queryBuilder().where(CardDao.Properties.Rarity.eq(4)).list();
+                        List<Card> list = cardDao.queryBuilder().where(CardDao.Properties.Rarity.eq(4), CardDao.Properties.Access.eq(1)).list();
                         int index = (int) (Math.random() * list.size());
                         Card card = list.get(index);
                         picList.add("http://" + card.getIcon());
                         FOUR_STAR++;
                     } else if (nextInt < 24) {
-                        List<Card> list = cardDao.queryBuilder().where(CardDao.Properties.Rarity.eq(3)).list();
+                        List<Card> list = cardDao.queryBuilder().where(CardDao.Properties.Rarity.eq(3), CardDao.Properties.Access.eq(1)).list();
                         int index = (int) (Math.random() * list.size());
                         Card card = list.get(index);
                         picList.add("http://" + card.getIcon());
                         THREE_STAR++;
                     } else {
-                        List<Card> list = cardDao.queryBuilder().where(CardDao.Properties.Rarity.eq(2)).list();
+                        List<Card> list = cardDao.queryBuilder().where(CardDao.Properties.Rarity.eq(2), CardDao.Properties.Access.eq(1)).list();
                         int index = (int) (Math.random() * list.size());
                         Card card = list.get(index);
                         picList.add("http://" + card.getIcon());
                         TWO_STAR++;
                     }
                 }
-                List<Card> list = cardDao.queryBuilder().where(CardDao.Properties.Rarity.eq(3)).list();
+                List<Card> list = cardDao.queryBuilder().where(CardDao.Properties.Rarity.eq(3), CardDao.Properties.Access.eq(1)).list();
                 int index = (int) (Math.random() * list.size());
                 Card card = list.get(index);
                 picList.add("http://" + card.getIcon());

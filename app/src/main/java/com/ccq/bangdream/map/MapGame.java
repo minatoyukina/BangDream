@@ -35,6 +35,7 @@ public class MapGame extends AppCompatActivity {
 
     private int j;
     private int k;
+    private static int LEVEL_COUNT;
 
     @SuppressLint("HandlerLeak")
     @Override
@@ -58,8 +59,6 @@ public class MapGame extends AppCompatActivity {
                 Bundle data = msg.getData();
                 value = data.getString("value");
                 final String str = data.getString("str");
-                TextView titleView = findViewById(R.id.map_title);
-                titleView.setText(value);
                 Spinner song = findViewById(R.id.song);
                 ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(MapGame.this, android.R.layout.simple_spinner_item, titles);
                 song.setAdapter(adapter);
@@ -107,7 +106,9 @@ public class MapGame extends AppCompatActivity {
                         width = resource.getWidth();
                         bitmap = resource;
                         Random random = new Random();
-                        final int i = random.nextInt(Math.round(width / 144));
+                        final int pieces = random.nextInt(Math.round(width / 144) - 4);
+                        final int i = pieces + 2;
+                        Log.d("pieces", String.valueOf(i));
                         Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, i, bitmap))).into(mapBar);
 
                         pre.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +143,11 @@ public class MapGame extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void loadMap() {
+        final TextView titleView = findViewById(R.id.map_title);
+//                titleView.setText(value);
+        titleView.setText("Map: " + (++LEVEL_COUNT));
         final Runnable networkTask = new Runnable() {
             @Override
             public void run() {

@@ -22,6 +22,7 @@ public class Card {
     private String skill;
     private String icon;
     private String icon_trained;
+    private Integer access;
 
     /**
      * Used to resolve relations
@@ -29,16 +30,14 @@ public class Card {
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /**
-     * Used for active entity operations.
-     */
+    /** Used for active entity operations. */
     @Generated(hash = 599084715)
     private transient CardDao myDao;
 
-    @Generated(hash = 23904880)
-    public Card(Integer id, Integer number, String member, String title,
-                Byte rarity, String attribute, String skill, String icon,
-                String icon_trained) {
+    @Generated(hash = 535012599)
+    public Card(Integer id, Integer number, String member, String title, Byte rarity,
+                String attribute, String skill, String icon, String icon_trained,
+                Integer access) {
         this.id = id;
         this.number = number;
         this.member = member;
@@ -48,6 +47,7 @@ public class Card {
         this.skill = skill;
         this.icon = icon;
         this.icon_trained = icon_trained;
+        this.access = access;
     }
 
     @Generated(hash = 52700939)
@@ -139,6 +139,14 @@ public class Card {
         this.icon_trained = icon_trained;
     }
 
+    public Integer getAccess() {
+        return access;
+    }
+
+    public void setAccess(Integer access) {
+        this.access = access;
+    }
+
     @Override
     public String toString() {
         return "Card{" +
@@ -152,6 +160,10 @@ public class Card {
                 ", skill='" + skill + '\'' +
                 ", icon='" + icon + '\'' +
                 ", icon_trained='" + icon_trained + '\'' +
+                ", access=" + access +
+                ", daoSession=" + daoSession +
+                ", myDao=" + myDao +
+                ", panel__resolvedKey=" + panel__resolvedKey +
                 '}';
     }
 
@@ -191,9 +203,7 @@ public class Card {
         myDao.update(this);
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1693529984)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;

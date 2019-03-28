@@ -16,10 +16,10 @@
                 android:id="@+id/nav_gacha"
                 android:icon="@drawable/ic_menu_slideshow"
                 android:title="@string/gacha"/>
-        <item
-                android:id="@+id/nav_score"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/score"/>
+        <!--<item-->
+        <!--android:id="@+id/nav_score"-->
+        <!--android:icon="@drawable/ic_menu_send"-->
+        <!--android:title="@string/score"/>-->
         <item
                 android:id="@+id/nav_map"
                 android:icon="@drawable/ic_menu_game"

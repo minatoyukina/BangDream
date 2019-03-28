@@ -18,7 +18,7 @@ import com.ccq.bangdream.greendao.PanelDao;
 
 /**
  * {@inheritDoc}
- *
+ * 
  * @see AbstractDaoSession
  */
 public class DaoSession extends AbstractDaoSession {

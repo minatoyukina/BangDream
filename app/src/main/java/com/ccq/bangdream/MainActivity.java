@@ -30,7 +30,6 @@ import com.ccq.bangdream.card.LoadCards;
 import com.ccq.bangdream.event.LoadEvents;
 import com.ccq.bangdream.gacha.GachaSim;
 import com.ccq.bangdream.map.MapGame;
-import com.ccq.bangdream.score.ScoreSum;
 import com.ccq.bangdream.setting.ActivityWithPreferenceFragment;
 import com.ccq.bangdream.util.CheckUpdateUtil;
 import com.ccq.bangdream.util.MyApplication;
@@ -96,14 +95,14 @@ public class MainActivity extends AppCompatActivity
                                 boolean update = CheckUpdateUtil.checkUpdate();
                                 if (update) {
                                     dialog.setMessage("\n有新版本");
-                                    dialog.setTitle("检查更新").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    dialog.setTitle("检查更新").setPositiveButton("去更新", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/minatoyukina/BangDream/releases"));
                                             startActivity(intent);
                                         }
                                     });
-                                    dialog.setNegativeButton("暂不更新", new DialogInterface.OnClickListener() {
+                                    dialog.setNegativeButton("忽略", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                             flag = false;
@@ -211,9 +210,11 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(MainActivity.this, LoadEvents.class);
         } else if (id == R.id.nav_gacha) {
             intent = new Intent(MainActivity.this, GachaSim.class);
-        } else if (id == R.id.nav_score) {
-            intent = new Intent(MainActivity.this, ScoreSum.class);
-        } else if (id == R.id.nav_map) {
+        }
+//        else if (id == R.id.nav_score) {
+//            intent = new Intent(MainActivity.this, ScoreSum.class);
+//        }
+        else if (id == R.id.nav_map) {
             intent = new Intent(MainActivity.this, MapGame.class);
         } else if (id == R.id.nav_share) {
             intent = new Intent(Intent.ACTION_SEND);
