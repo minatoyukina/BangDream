@@ -39,13 +39,32 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-        <Button
-                android:id="@+id/pre"
-                android:layout_width="80dp"
+        <!--<Button-->
+        <!--android:id="@+id/pre"-->
+        <!--android:layout_width="48dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:background="@drawable/icons8_back_arrow_48"-->
+        <!--android:text="@string/pre_5s"-->
+        <!--android:layout_centerVertical="true"/>-->
+
+        <LinearLayout
+                android:layout_width="48dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:text="@string/pre_5s"
-                android:layout_centerVertical="true"/>
+                android:orientation="vertical"
+                android:layout_centerVertical="true">
+            <Button
+                    android:id="@+id/pre"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/icons8_back_arrow_48"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="@string/pre_5s"/>
+        </LinearLayout>
 
         <ImageView
                 android:layout_width="match_parent"
@@ -54,13 +73,32 @@
                 android:layout_centerInParent="true"
                 android:contentDescription="@null"/>
 
-        <Button
-                android:id="@+id/next"
-                android:layout_width="80dp"
+        <!--<Button-->
+        <!--android:id="@+id/next"-->
+        <!--android:layout_width="48dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:background="@drawable/icons8_forward_button_48"-->
+        <!--android:text="@string/next_5s"-->
+        <!--android:layout_centerVertical="true"/>-->
+
+        <LinearLayout
+                android:layout_width="48dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:text="@string/next_5s"
-                android:layout_centerVertical="true"/>
+                android:orientation="vertical"
+                android:layout_centerVertical="true">
+            <Button
+                    android:id="@+id/next"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/icons8_forward_button_48"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="@string/next_5s"/>
+        </LinearLayout>
 
     </RelativeLayout>
 
