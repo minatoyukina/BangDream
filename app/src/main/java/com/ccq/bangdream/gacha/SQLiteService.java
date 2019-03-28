@@ -72,6 +72,7 @@ public class SQLiteService extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        sqLiteDatabase.execSQL("drop table card");
+        sqLiteDatabase.execSQL("drop table panel");
     }
 }

@@ -43,11 +43,11 @@ public class CheckUpdateUtil {
                         bundle.putBoolean("update", true);
                         message.setData(bundle);
                         handler.sendMessage(message);
-                    } else if (Integer.parseInt(split[1]) > Integer.parseInt(originalSplit[1])) {
+                    } else if (Integer.parseInt(split[0]) == Integer.parseInt(originalSplit[0]) && Integer.parseInt(split[1]) > Integer.parseInt(originalSplit[1])) {
                         bundle.putBoolean("update", true);
                         message.setData(bundle);
                         handler.sendMessage(message);
-                    } else if (Integer.parseInt(split[2]) > Integer.parseInt(originalSplit[2])) {
+                    } else if (Integer.parseInt(split[0]) == Integer.parseInt(originalSplit[0]) && Integer.parseInt(split[1]) == Integer.parseInt(originalSplit[1]) && Integer.parseInt(split[2]) > Integer.parseInt(originalSplit[2])) {
                         bundle.putBoolean("update", true);
                         message.setData(bundle);
                         handler.sendMessage(message);

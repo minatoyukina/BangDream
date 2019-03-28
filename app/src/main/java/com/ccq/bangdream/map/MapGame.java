@@ -33,9 +33,12 @@ public class MapGame extends AppCompatActivity {
     private float width;
     private Bitmap bitmap;
 
-    private int j;
-    private int k;
+
+    private int i;
+
     private static int LEVEL_COUNT;
+    private static int CORRECT_COUNT;
+    private static int MAP_CHANGE_COUNT;
 
     @SuppressLint("HandlerLeak")
     @Override
@@ -47,7 +50,7 @@ public class MapGame extends AppCompatActivity {
         setContentView(R.layout.activity_map_game);
         final ImageView mapBar = findViewById(R.id.map_bar);
         final Button button = findViewById(R.id.guess);
-        loadMap();
+//        loadMap();
 
         final Button pre = findViewById(R.id.pre);
         final Button next = findViewById(R.id.next);
@@ -59,6 +62,8 @@ public class MapGame extends AppCompatActivity {
                 Bundle data = msg.getData();
                 value = data.getString("value");
                 final String str = data.getString("str");
+                final TextView titleView = findViewById(R.id.map_title);
+                titleView.setText(value);
                 Spinner song = findViewById(R.id.song);
                 ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(MapGame.this, android.R.layout.simple_spinner_item, titles);
                 song.setAdapter(adapter);
@@ -72,10 +77,15 @@ public class MapGame extends AppCompatActivity {
                             AlertDialog.Builder dialog = new AlertDialog.Builder(MapGame.this);
                             dialog.setTitle("结果");
                             dialog.setMessage("\n回答正确");
+                            CORRECT_COUNT++;
                             dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    button.performClick();
+                                    if (LEVEL_COUNT < 5) {
+                                        button.performClick();
+                                    } else {
+                                        resultDialog();
+                                    }
                                 }
                             });
                             dialog.show();
@@ -86,11 +96,31 @@ public class MapGame extends AppCompatActivity {
                             dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    button.performClick();
+                                    if (LEVEL_COUNT < 5) {
+                                        button.performClick();
+                                    } else {
+                                        resultDialog();
+                                    }
                                 }
                             });
                             dialog.show();
                         }
+                    }
+
+                    private void resultDialog() {
+                        AlertDialog.Builder result = new AlertDialog.Builder(MapGame.this);
+                        result.setTitle("结果").setMessage("答对谱面: " + CORRECT_COUNT + "/20" + "\n切换次数: " + MAP_CHANGE_COUNT).setPositiveButton("再来一把", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                onResume();
+                            }
+                        });
+                        result.setNegativeButton("退出", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                onBackPressed();
+                            }
+                        }).show();
                     }
 
 
@@ -107,23 +137,31 @@ public class MapGame extends AppCompatActivity {
                         bitmap = resource;
                         Random random = new Random();
                         final int pieces = random.nextInt(Math.round(width / 144) - 4);
-                        final int i = pieces + 2;
+                        i = pieces + 2;
                         Log.d("pieces", String.valueOf(i));
                         Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, i, bitmap))).into(mapBar);
 
                         pre.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, i + (--j), bitmap))).into(mapBar);
-                                Log.d("j", String.valueOf(j));
+                                if (i > 1) {
+                                    Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, --i, bitmap))).into(mapBar);
+                                    Log.d("<-", String.valueOf(i));
+                                } else {
+                                    Toast.makeText(MapGame.this, "到头了", Toast.LENGTH_LONG).show();
+                                }
                             }
                         });
 
                         next.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, i + (++k), bitmap))).into(mapBar);
-                                Log.d("k", String.valueOf(k));
+                                if (i < width / 144) {
+                                    Glide.with(MapGame.this).load("http://www.sdvx.in/bandri/obj/data" + str + "ex.png").apply(bitmapTransform(new MyCropTransformation(144, 984, ++i, bitmap))).into(mapBar);
+                                    Log.d("->", String.valueOf(i));
+                                } else {
+                                    Toast.makeText(MapGame.this, "到尾了", Toast.LENGTH_LONG).show();
+                                }
                             }
                         });
 
@@ -137,17 +175,14 @@ public class MapGame extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 loadMap();
-                k = 0;
-                j = 0;
             }
         });
     }
 
     @SuppressLint("SetTextI18n")
     private void loadMap() {
-        final TextView titleView = findViewById(R.id.map_title);
-//                titleView.setText(value);
-        titleView.setText("Map: " + (++LEVEL_COUNT));
+        final TextView mapCount = findViewById(R.id.map_count);
+        mapCount.setText("Map: " + (++LEVEL_COUNT));
         final Runnable networkTask = new Runnable() {
             @Override
             public void run() {
@@ -165,7 +200,7 @@ public class MapGame extends AppCompatActivity {
                     @SuppressLint("DefaultLocale") String str = String.format("%03d", i);
                     String[] songs = td.split("--> <script>");
                     if (titles.size() == 0) {
-                        titles.add("歌曲列表: ");
+                        titles.add("Song List : ");
                         for (String song : songs) {
                             String title = song.split("<!--")[1];
                             titles.add(title);
@@ -178,6 +213,7 @@ public class MapGame extends AppCompatActivity {
                             data.putString("value", title);
                             data.putString("str", str);
                         }
+
                     }
                     msg.setData(data);
                     handler.sendMessage(msg);
@@ -187,6 +223,15 @@ public class MapGame extends AppCompatActivity {
             }
         };
         new Thread(networkTask).start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LEVEL_COUNT = 0;
+        MAP_CHANGE_COUNT = 0;
+        CORRECT_COUNT = 0;
+        loadMap();
     }
 
     @Override
