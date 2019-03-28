@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
             intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_TEXT, "https://github.com/minatoyukina");
+            intent.putExtra(Intent.EXTRA_TEXT, "https://github.com/minatoyukina/BangDream/releases");
         } else if (id == R.id.nav_setting) {
             intent = new Intent(MainActivity.this, ActivityWithPreferenceFragment.class);
         }

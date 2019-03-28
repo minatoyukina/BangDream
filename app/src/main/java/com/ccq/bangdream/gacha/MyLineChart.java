@@ -93,7 +93,8 @@ class MyLineChart {
         Legend legend = lineChart.getLegend();
         legend.setEnabled(false);
         Description description = new Description();
-        description.setEnabled(false);
+        description.setText("星级走势");
+        description.setPosition(0f, 0f);
         lineChart.setDescription(description);
         lineChart.setNoDataText("暂无数据");
         List<ILineDataSet> dataSets = new ArrayList<>();

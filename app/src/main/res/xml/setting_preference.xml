@@ -13,7 +13,7 @@
             android:title="@string/contract_us"/>
     <Preference
             android:key="licence"
-            android:summary="本程序的诞生离不开众多开源项目的支持"
+            android:summary="本应用的诞生离不开众多开源项目的支持"
             android:title="@string/licence"/>
     <Preference
             android:key="special_links"
