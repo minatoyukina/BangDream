@@ -8,7 +8,7 @@
 </p>
 
 # Release
-&nbsp; Click [here](https://github.com/minatoyukina/BangDream/releases/download/0.9.4/BangDream-0.9.4.apk) to download the apk.
+&nbsp; Click [here](https://github.com/minatoyukina/BangDream/releases/download/0.9.5/BangDream-0.9.5.apk) to download the apk.
 
 # TODO
 * [ ] band member birthday notifications
