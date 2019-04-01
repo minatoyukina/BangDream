@@ -1,7 +1,25 @@
 package com.ccq.bangdream.util;
 
-public class UAUtil {
-    public static String[] UserAgent = {
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
+import java.util.Random;
+
+public class JsoupUtil {
+
+    public static Document getDocument(String url) {
+        Document document = null;
+        try {
+            document = Jsoup.connect(url)
+                    .userAgent(UserAgent[new Random().nextInt(UserAgent.length)]).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return document;
+    }
+
+    private static String[] UserAgent = {
             "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.13 (KHTML, like Gecko) Chrome/24.0.1290.1 Safari/537.13",
             "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0",
             "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; LBBROWSER)",

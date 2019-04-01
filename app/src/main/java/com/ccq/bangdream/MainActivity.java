@@ -32,15 +32,13 @@ import com.ccq.bangdream.gacha.GachaSim;
 import com.ccq.bangdream.map.MapGame;
 import com.ccq.bangdream.setting.ActivityWithPreferenceFragment;
 import com.ccq.bangdream.util.CheckUpdateUtil;
+import com.ccq.bangdream.util.JsoupUtil;
 import com.ccq.bangdream.util.MyApplication;
-import com.ccq.bangdream.util.UAUtil;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -127,17 +125,12 @@ public class MainActivity extends AppCompatActivity
             public void run() {
                 Message msg = new Message();
                 Bundle data = new Bundle();
-                try {
-                    Document document = Jsoup.connect("https://bandori.party/events/")
-                            .userAgent(UAUtil.UserAgent[new Random().nextInt(UAUtil.UserAgent.length)]).get();
-                    String url = document.select("div[class=row items]").select("a").attr("href");
-                    url = "http://bandori.party" + url;
-                    data.putString("value", url);
-                    msg.setData(data);
-                    handler.sendMessage(msg);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Document document = JsoupUtil.getDocument("https://bandori.party/events/");
+                String url = document.select("div[class=row items]").select("a").attr("href");
+                url = "http://bandori.party" + url;
+                data.putString("value", url);
+                msg.setData(data);
+                handler.sendMessage(msg);
             }
         };
         new Thread(networkTask).start();
@@ -241,7 +234,7 @@ public class MainActivity extends AppCompatActivity
         try {
             byte[] buffer = new byte[Objects.requireNonNull(is).available()];
             int read = is.read(buffer);
-            Log.d("whatever", String.valueOf(read));
+            Log.d("readBytes", String.valueOf(read));
             is.close();
             String cssCode = Base64.encodeToString(buffer, Base64.NO_WRAP);
             String jsCode = "javascript:(function() {" +

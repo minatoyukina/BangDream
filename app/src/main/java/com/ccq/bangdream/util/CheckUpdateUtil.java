@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 
@@ -31,7 +30,7 @@ public class CheckUpdateUtil {
             public void run() {
                 try {
                     String url = "https://github.com/minatoyukina/BangDream/tags";
-                    Document document = Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36").get();
+                    Document document = JsoupUtil.getDocument(url);
                     String versionName = document.select("div[class=box]").select("div[class=Box-row position-relative d-flex]").select("a").first().text();
                     Log.d("version", versionName);
                     String[] split = versionName.split("\\.");
@@ -62,7 +61,6 @@ public class CheckUpdateUtil {
             }
         };
         new Thread(runnable).start();
-        Log.d("1234", String.valueOf(update));
         return update;
 
     }

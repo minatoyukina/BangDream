@@ -20,12 +20,11 @@ import com.ccq.bangdream.greendao.CardDao;
 import com.ccq.bangdream.greendao.DaoMaster;
 import com.ccq.bangdream.greendao.DaoSession;
 import com.ccq.bangdream.pojo.Card;
+import com.ccq.bangdream.util.JsoupUtil;
 import com.ccq.bangdream.util.ListSumUtil;
 import org.greenrobot.greendao.query.QueryBuilder;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -87,18 +86,12 @@ public class GachaSim extends AppCompatActivity {
             public void run() {
                 Message msg = new Message();
                 Bundle data = new Bundle();
-                try {
-                    Document document = Jsoup.connect("https://bandori.party/gachas/")
-                            .userAgent("Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Mobile Safari/537.36")
-                            .get();
-                    String url = document.select("div[class=text-center top-item]").select("img").attr("src");
-                    url = "http://" + url;
-                    data.putString("value", url);
-                    msg.setData(data);
-                    handler.sendMessage(msg);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Document document = JsoupUtil.getDocument("https://bandori.party/gachas/");
+                String url = document.select("div[class=text-center top-item]").select("img").attr("src");
+                url = "http://" + url;
+                data.putString("value", url);
+                msg.setData(data);
+                handler.sendMessage(msg);
             }
         };
         new Thread(networkTask).start();

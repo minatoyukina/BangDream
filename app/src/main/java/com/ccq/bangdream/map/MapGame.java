@@ -15,10 +15,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.ccq.bangdream.R;
-import org.jsoup.Jsoup;
+import com.ccq.bangdream.util.JsoupUtil;
 import org.jsoup.nodes.Document;
 
-import java.io.IOException;
 import java.util.*;
 
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
@@ -109,7 +108,7 @@ public class MapGame extends AppCompatActivity {
                     private void resultDialog() {
                         AlertDialog.Builder result = new AlertDialog.Builder(MapGame.this);
                         Log.d("MAP_CHANGE_COUNT", MAP_CHANGE_COUNT.toString());
-                        result.setTitle("结果").setMessage("答对谱面: " + CORRECT_COUNT + "/15" + "\n换图个数: " + (MAP_CHANGE_COUNT.size() - 15)).setPositiveButton("再来一把", new DialogInterface.OnClickListener() {
+                        result.setTitle("结果").setMessage("答对谱面: " + CORRECT_COUNT + "/15" + "\n换图个数: " + (MAP_CHANGE_COUNT.size() - 15)).setPositiveButton("重新开始", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 onResume();
@@ -190,38 +189,32 @@ public class MapGame extends AppCompatActivity {
             public void run() {
                 Message msg = new Message();
                 Bundle data = new Bundle();
-                try {
-                    Document document = Jsoup.connect("http://www.sdvx.in/bandri/sort/def.htm")
-                            .userAgent("Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Mobile Safari/537.36")
-                            .get();
-                    int songSize = document.select("table[class=c]").eq(2).select("script").size();
+                Document document = JsoupUtil.getDocument("http://www.sdvx.in/bandri/sort/def.htm");
+                int songSize = document.select("table[class=c]").eq(2).select("script").size();
 
-                    Random random = new Random();
-                    int i = random.nextInt(songSize);
-                    String td = document.select("table[class=c]").eq(2).select("td").toString().replace("<td> <script>", "").replace("--> </td>", "");
-                    @SuppressLint("DefaultLocale") String str = String.format("%03d", i);
-                    String[] songs = td.split("--> <script>");
-                    if (titles.size() == 0) {
-                        titles.add("Song List : ");
-                        for (String song : songs) {
-                            String title = song.split("<!--")[1];
-                            titles.add(title);
-                        }
-                    }
+                Random random = new Random();
+                int i = random.nextInt(songSize);
+                String td = document.select("table[class=c]").eq(2).select("td").toString().replace("<td> <script>", "").replace("--> </td>", "");
+                @SuppressLint("DefaultLocale") String str = String.format("%03d", i);
+                String[] songs = td.split("--> <script>");
+                if (titles.size() == 0) {
+                    titles.add("Song List : ");
                     for (String song : songs) {
-                        String sort = song.split(";")[0];
                         String title = song.split("<!--")[1];
-                        if (sort.equals("SORT" + str + "()")) {
-                            data.putString("value", title);
-                            data.putString("str", str);
-                        }
-
+                        titles.add(title);
                     }
-                    msg.setData(data);
-                    handler.sendMessage(msg);
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
+                for (String song : songs) {
+                    String sort = song.split(";")[0];
+                    String title = song.split("<!--")[1];
+                    if (sort.equals("SORT" + str + "()")) {
+                        data.putString("value", title);
+                        data.putString("str", str);
+                    }
+                }
+                msg.setData(data);
+                handler.sendMessage(msg);
+
             }
         };
         new Thread(networkTask).start();
