@@ -53,14 +53,13 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        setTitle("当前活动");
+        setTitle("最新活动");
         setContentView(R.layout.activity_main);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.dialog);
         builder.setCancelable(false);
         builder.setView(R.layout.layout_dialog);
         final AlertDialog dialog = builder.create();
-        dialog.show();
 
         @SuppressLint("HandlerLeak") final Handler handler = new Handler() {
             @Override
@@ -82,13 +81,14 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onPageStarted(WebView view, String url, Bitmap favicon) {
                         super.onPageStarted(view, url, favicon);
+                        dialog.show();
                     }
 
                     @Override
                     public void onPageFinished(WebView view, String url) {
+                        dialog.dismiss();
                         super.onPageFinished(view, url);
                         loadCss();
-                        dialog.dismiss();
                         if (flag) {
                             try {
                                 final AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity
                 Message msg = new Message();
                 Bundle data = new Bundle();
                 Document document = JsoupUtil.getDocument("https://bandori.party/events/");
-                String url = document.select("div[class=row items]").select("a").attr("href");
+                String url = document.select("div[class=collection-page-wrapper as-container]").select("a").attr("href");
                 url = "http://bandori.party" + url;
                 data.putString("value", url);
                 msg.setData(data);

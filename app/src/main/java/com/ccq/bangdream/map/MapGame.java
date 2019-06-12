@@ -79,7 +79,7 @@ public class MapGame extends AppCompatActivity {
                             dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    if (LEVEL_COUNT < 15) {
+                                    if (LEVEL_COUNT < 10) {
                                         button.performClick();
                                     } else {
                                         resultDialog();
@@ -94,7 +94,7 @@ public class MapGame extends AppCompatActivity {
                             dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    if (LEVEL_COUNT < 15) {
+                                    if (LEVEL_COUNT < 10) {
                                         button.performClick();
                                     } else {
                                         resultDialog();
@@ -108,7 +108,7 @@ public class MapGame extends AppCompatActivity {
                     private void resultDialog() {
                         AlertDialog.Builder result = new AlertDialog.Builder(MapGame.this);
                         Log.d("MAP_CHANGE_COUNT", MAP_CHANGE_COUNT.toString());
-                        result.setTitle("结果").setMessage("答对谱面: " + CORRECT_COUNT + "/15" + "\n换图个数: " + (MAP_CHANGE_COUNT.size() - 15)).setPositiveButton("重新开始", new DialogInterface.OnClickListener() {
+                        result.setTitle("结果").setMessage("答对谱面: " + CORRECT_COUNT + "/10" + "\n提示次数: " + (MAP_CHANGE_COUNT.size() - 10)).setPositiveButton("重新开始", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 onResume();
@@ -194,7 +194,7 @@ public class MapGame extends AppCompatActivity {
 
                 Random random = new Random();
                 int i = random.nextInt(songSize);
-                String td = document.select("table[class=c]").eq(2).select("td").toString().replace("<td> <script>", "").replace("--> </td>", "");
+                String td = document.select("table[class=c]").eq(2).select("td").toString().replace("<td> <script>", "").replace("--> </td>", "").replaceAll("\n<td height=\"10\"></td>\n", "--> <script>");
                 @SuppressLint("DefaultLocale") String str = String.format("%03d", i);
                 String[] songs = td.split("--> <script>");
                 if (titles.size() == 0) {
